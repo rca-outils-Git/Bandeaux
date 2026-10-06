@@ -82,8 +82,8 @@
       <!-- Les diapositives seront injectées par le script -->
     </div>
 
-    <!-- Zone Bouton GIF (remplie dynamiquement via config.json) -->
-    <a id="gif-button-link" href="#" class="btn-gif-link" target="_top">
+    <!-- Zone Bouton GIF (remplie dynamiquement via l'API) -->
+    <a id="gif-button-link" href="#" class="btn-gif-link" target="_top" style="display: none;">
       <img id="gif-button-img" src="" alt="Bouton d'action">
     </a>
   </div>
@@ -92,53 +92,54 @@
     let currentIndex = 0;
     let slidesElements = [];
 
-   // Chargement dynamique du fichier config.json
-   fetch("https://script.google.com/macros/s/AKfycby1iVQ9WOQzTulYY_asc6pvY3EKV1l_tl5t-aebTAmqFslWepyunP4iMEpSJoOPFxl3/exec")
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Impossible de récupérer la configuration');
-    }
-    return response.json();
-  })
-  .then(data => {
-
-    // 1. Génération des diapositives de texte
-    const carousel = document.getElementById('carousel');
-
-    data.slides.forEach((slide, index) => {
-      const div = document.createElement('div');
-      div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-      div.style.backgroundColor = slide.color;
-      div.textContent = slide.text;
-      carousel.appendChild(div);
-    });
-
-    slidesElements = document.querySelectorAll('.carousel-slide');
-
-    // 2. Configuration du bouton GIF et de son lien
-    if (data.gif_button) {
-      document.getElementById('gif-button-img').src = data.gif_button;
-    }
-
-    if (data.button_link) {
-      document.getElementById('gif-button-link').href = data.button_link;
-    }
-
-  })
-  .catch(error => {
-    console.error('Erreur de chargement de la configuration :', error);
-  });
-
-        // 3. Défilement automatique du carrousel toutes les 4 secondes
-        setInterval(() => {
-          if (slidesElements.length === 0) return;
-          slidesElements[currentIndex].classList.remove('active');
-          currentIndex = (currentIndex + 1) % slidesElements.length;
-          slidesElements[currentIndex].classList.add('active');
-        }, 4000);
+    // Chargement dynamique depuis Google Apps Script
+    fetch("https://script.google.com/macros/s/AKfycby1iVQ9WOQzTulYY_asc6pvY3EKV1l_tl5t-aebTAmqFslWepyunP4iMEpSJoOPFxl3/exec")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Impossible de récupérer la configuration');
+        }
+        return response.json();
       })
-      .catch(error => console.error('Erreur de chargement du fichier config.json:', error));
-    
+      .then(data => {
+        // 1. Génération des diapositives de texte
+        const carousel = document.getElementById('carousel');
+
+        if (data.slides && Array.isArray(data.slides)) {
+          data.slides.forEach((slide, index) => {
+            const div = document.createElement('div');
+            div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+            div.style.backgroundColor = slide.color || '#333';
+            div.textContent = slide.text || '';
+            carousel.appendChild(div);
+          });
+
+          slidesElements = document.querySelectorAll('.carousel-slide');
+        }
+
+        // 2. Configuration du bouton GIF et de son lien
+        const gifLink = document.getElementById('gif-button-link');
+        const gifImg = document.getElementById('gif-button-img');
+
+        if (data.gif_button) {
+          gifImg.src = data.gif_button;
+          gifLink.style.display = 'inline-block'; // Affiche le bouton si une image est présente
+        }
+
+        if (data.button_link) {
+          gifLink.href = data.button_link;
+        }
+      })
+      .catch(error => {
+        console.error('Erreur de chargement de la configuration :', error);
+      });
+
+    // 3. Défilement automatique du carrousel toutes les 4 secondes
+    setInterval(() => {
+      if (slidesElements.length === 0) return;
+      slidesElements[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % slidesElements.length;
+      slidesElements[currentIndex].classList.add('active');
+    }, 4000);
   </script>
 
 </body>
