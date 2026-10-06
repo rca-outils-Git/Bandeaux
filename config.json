@@ -12,5 +12,7 @@
       "text": "Troisième texte du carrousel",
       "color": "#16a34a"
     }
-  ]
+  ],
+  "gif_button": "mon-bouton.gif",
+  "button_link": "https://www.randocotedamour.fr/page/3983060-benevolat-rca"
 }
