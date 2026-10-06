@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bandeau Carrousel Dynamique</title>
+  <title>Bandeau Carrousel avec Bouton GIF</title>
   <style>
     body {
       margin: 0;
@@ -12,7 +12,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Structure principale (~2 cm de hauteur) */
+    /* Structure du bandeau (~2 cm de hauteur = 76px) */
     .banner-container {
       display: flex;
       align-items: center;
@@ -24,7 +24,7 @@
       gap: 16px;
     }
 
-    /* Carrousel */
+    /* Conteneur du carrousel de textes */
     .carousel-wrapper {
       flex: 1;
       height: 100%;
@@ -52,84 +52,52 @@
       opacity: 1;
     }
 
-    /* Bouton */
-    .btn-action {
+    /* Conteneur et style du bouton GIF */
+    .btn-gif-link {
+      display: inline-block;
       height: 100%;
-      padding: 0 20px;
-      background-color: #1f2937;
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
       cursor: pointer;
-      white-space: nowrap;
-      transition: background-color 0.2s ease;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s ease;
     }
 
-    .btn-action:hover {
-      background-color: #374151;
+    .btn-gif-link:hover {
+      transform: scale(1.04);
     }
 
-    
-
- /* ==========================================================================
-        BOUTON D'ACTION avec gif
-   ========================================================================== */
-  .btn-gif {
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none;
-    border-radius: 8px;
-    overflow: hidden; /* Empêche l'image de dépasser des bords arrondis */
-    display: inline-block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  /* Redimensionnement de l'image GIF */
-  .btn-gif img {
-    display: block;
-    width: 150px;  /* Ajuste la largeur souhaitée */
-    height: auto;  /* Conserve le ratio d'aspect du GIF */
-  }
-
-  /* Effet visuel au survol et au clic */
-  .btn-gif:hover {
-    transform: scale(1.05); /* Effet d'agrandissement léger */
-  }
-
-  .btn-gif:active {
-    transform: scale(0.95); /* Effet d'enfoncement au clic */
-  }
-
+    .btn-gif-link img {
+      display: block;
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
   </style>
 </head>
 <body>
 
   <div class="banner-container">
+    <!-- Zone Carrousel -->
     <div class="carousel-wrapper" id="carousel">
-      <!-- Les diapositives seront générées automatiquement ici -->
+      <!-- Les diapositives seront injectées par le script -->
     </div>
-   
-    <button type="button" class="btn-gif" onclick="window.location.href='https://www.randocotedamour.fr/page/3983060-benevolat-rca';">
-      <!-- Le GIF est inséré dans l'image -->
-      <img src="Votre texte de paragraphe (3).gif" alt="Description de l'action du bouton" />
-    </button>
+
+    <!-- Zone Bouton GIF (remplie dynamiquement via config.json) -->
+    <a id="gif-button-link" href="#" class="btn-gif-link" target="_top">
+      <img id="gif-button-img" src="" alt="Bouton d'action">
+    </a>
   </div>
 
   <script>
     let currentIndex = 0;
     let slidesElements = [];
 
-    // Chargement dynamique de la configuration JSON
+    // Chargement dynamique du fichier config.json
     fetch('config.json')
       .then(response => response.json())
       .then(data => {
+        // 1. Génération des diapositives de texte
         const carousel = document.getElementById('carousel');
-        
-        // Génération des éléments HTML à partir du JSON
         data.slides.forEach((slide, index) => {
           const div = document.createElement('div');
           div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
@@ -140,7 +108,15 @@
 
         slidesElements = document.querySelectorAll('.carousel-slide');
 
-        // Lancement de la rotation toutes les 4 secondes
+        // 2. Configuration du bouton GIF et de son lien
+        if (data.gif_button) {
+          document.getElementById('gif-button-img').src = data.gif_button;
+        }
+        if (data.button_link) {
+          document.getElementById('gif-button-link').href = data.button_link;
+        }
+
+        // 3. Défilement automatique du carrousel toutes les 4 secondes
         setInterval(() => {
           if (slidesElements.length === 0) return;
           slidesElements[currentIndex].classList.remove('active');
@@ -148,9 +124,8 @@
           slidesElements[currentIndex].classList.add('active');
         }, 4000);
       })
-      .catch(error => console.error('Erreur lors du chargement de config.json:', error));
+      .catch(error => console.error('Erreur de chargement du fichier config.json:', error));
   </script>
 
 </body>
 </html>
-
