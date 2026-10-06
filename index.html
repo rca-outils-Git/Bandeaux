@@ -192,6 +192,38 @@
       transform: translateX(3px);   /* Déplacement subtil vers la droite au survol */
     }
 
+ /* ==========================================================================
+        BOUTON D'ACTION avec gif
+   ========================================================================== */
+  .btn-gif {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+    overflow: hidden; /* Empêche l'image de dépasser des bords arrondis */
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  /* Redimensionnement de l'image GIF */
+  .btn-gif img {
+    display: block;
+    width: 150px;  /* Ajuste la largeur souhaitée */
+    height: auto;  /* Conserve le ratio d'aspect du GIF */
+  }
+
+  /* Effet visuel au survol et au clic */
+  .btn-gif:hover {
+    transform: scale(1.05); /* Effet d'agrandissement léger */
+  }
+
+  .btn-gif:active {
+    transform: scale(0.95); /* Effet d'enfoncement au clic */
+  }
+
+
     /* ==========================================================================
        5. ADAPTABILITÉ MOBILE (RESPONSIVE DESIGN)
        ========================================================================== */
@@ -231,7 +263,7 @@
         <!-- SLIDE 1 : FOND ROUGE -->
         <div class="carousel-slide slide-red">
           <div class="slide-content">
-            <span class="slide-title">Assemblée</span>
+            <span class="slide-title">Ouverture des inscriptions le 1er septembre</span>
             <span class="slide-desc">Profitez de -30% sur toute la gamme aujourd'hui.</span>
           </div>
         </div>
@@ -239,7 +271,7 @@
         <!-- SLIDE 2 : FOND BLEU -->
         <div class="carousel-slide slide-blue">
           <div class="slide-content">
-            <span class="slide-title">2. Livraison Gratuite</span>
+            <span class="slide-title">Assemblée Générale le 5 novembre (Floralies)</span>
             <span class="slide-desc">Dès 50€ d'achat partout en France métropolitaine.</span>
           </div>
         </div>
@@ -247,7 +279,7 @@
         <!-- SLIDE 3 : FOND VERT -->
         <div class="carousel-slide slide-green">
           <div class="slide-content">
-            <span class="slide-title">3. Garantie Satisfait</span>
+            <span class="slide-title">Accueil des nouveaux le 28 novembre</span>
             <span class="slide-desc">30 jours pour changer d'avis sans aucun frais.</span>
           </div>
         </div>
@@ -258,7 +290,7 @@
       <div class="carousel-dots" id="carouselDots"></div>
     </div>
 
-    <!-- 2. BOUTON D'ACTION (Partie droite) -->
+    <!-- 2. BOUTON D'ACTION vers bénévolats 
     <a href="#" class="cta-button" id="ctaBtn">
       <span>En savoir plus</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -267,50 +299,18 @@
       </svg>
     </a>
     
-    <!-- La balise button assure la réactivité au clic et la gestion du clavier 
+    La balise button assure la réactivité au clic et la gestion du clavier 
     <button type="button" class="btn-gif" onclick="alert('Bouton cliqué !')">
-        <!-- Le GIF est inséré dans l'image -->
         <img src="mon-animation.gif" alt="Description de l'action du bouton" />
     </button>
     -->
-
-
 
     <button type="button" class="btn-gif" onclick="window.location.href='https://www.randocotedamour.fr/page/3983060-benevolat-rca';">
       <!-- Le GIF est inséré dans l'image -->
       <img src="Votre texte de paragraphe (3).gif" alt="Description de l'action du bouton" />
     </button>
 
-<style>
-  /* On réinitialise le style par défaut du bouton */
-  .btn-gif {
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    outline: none;
-    border-radius: 8px;
-    overflow: hidden; /* Empêche l'image de dépasser des bords arrondis */
-    display: inline-block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
 
-  /* Redimensionnement de l'image GIF */
-  .btn-gif img {
-    display: block;
-    width: 150px;  /* Ajuste la largeur souhaitée */
-    height: auto;  /* Conserve le ratio d'aspect du GIF */
-  }
-
-  /* Effet visuel au survol et au clic */
-  .btn-gif:hover {
-    transform: scale(1.05); /* Effet d'agrandissement léger */
-  }
-
-  .btn-gif:active {
-    transform: scale(0.95); /* Effet d'enfoncement au clic */
-  }
-</style>
 
   </div>
 
