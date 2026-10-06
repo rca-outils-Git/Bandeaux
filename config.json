@@ -1,0 +1,16 @@
+{
+  "slides": [
+    {
+      "text": "Premier texte du carrousel",
+      "color": "#dc2626"
+    },
+    {
+      "text": "Deuxième texte du carrousel",
+      "color": "#2563eb"
+    },
+    {
+      "text": "Troisième texte du carrousel",
+      "color": "#16a34a"
+    }
+  ]
+}
