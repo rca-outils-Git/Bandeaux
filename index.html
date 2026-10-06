@@ -2,195 +2,76 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <!-- Méta balise Viewport : Essentielle pour garantir l'affichage adaptatif (responsive) sur mobiles et tablettes -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bandeau Compact Carrousel Texte Couleur & Bouton</title>
-
+  <title>Bandeau Carrousel Dynamique</title>
   <style>
-    /* ==========================================================================
-       1. VARIABLES CSS ET RÉINITIALISATION BASE
-       ========================================================================== */
-    :root {
-      /* Définition des couleurs des slides */
-      --bg-slide-red: #dc2626;    /* Rouge vif accessible avec texte blanc */
-      --bg-slide-blue: #2563eb;   /* Bleu roi moderne */
-      --bg-slide-green: #16a34a;  /* Vert émeraude */
-
-      /* Définition de la hauteur compacte du bandeau (~2 cm / ~75-80px sur écran standard) */
-      --banner-height: 76px;
-      
-      /* Transitions réutilisables */
-      --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
-    }
-
-    /* Réinitialisation globale pour éviter les marges indésirables */
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    /* Le fond global de la page est blanc comme demandé */
-    body {
       background-color: #ffffff;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
+      font-family: Arial, sans-serif;
     }
 
-    /* ==========================================================================
-       2. STRUCTURE DU BANDEAU CONTENEUR
-       ========================================================================== */
+    /* Structure principale (~2 cm de hauteur) */
     .banner-container {
+      display: flex;
+      align-items: center;
+      height: 76px;
       width: 100%;
-      max-width: 960px;
-      height: var(--banner-height); /* Hauteur fixe compacte de ~2cm */
       background-color: #ffffff;
-      border: 1px solid #e2e8f0;   /* Légère bordure neutre */
-      border-radius: 12px;
-      display: flex;                /* Alignement horizontal du carrousel et du bouton */
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* Ombre douce moderne */
-      overflow: hidden;             /* Empêche les débordements */
+      box-sizing: border-box;
+      padding: 8px 16px;
+      gap: 16px;
     }
 
-    /* ==========================================================================
-       3. CARROUSEL DE TEXTE (3 SLIDES COULEUR)
-       ========================================================================== */
-    .carousel-section {
+    /* Carrousel */
+    .carousel-wrapper {
+      flex: 1;
+      height: 100%;
       position: relative;
-      flex: 1;                       /* Prend tout l'espace disponible à gauche du bouton */
-      height: 100%;
+      overflow: hidden;
       border-radius: 8px;
-      overflow: hidden;              /* Masque les slides adjacentes hors de vue */
     }
 
-    /* Piste défilante contenant toutes les slides alignées */
-    .carousel-track {
-      display: flex;
-      height: 100%;
-      width: 100%;
-      transition: transform var(--transition-smooth); /* Glissement fluide inter-slide */
-    }
-
-    /* Structure commune pour chaque slide de texte */
     .carousel-slide {
-      min-width: 100%;               /* Chaque slide occupe 100% de la largeur du carrousel */
-      height: 100%;
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 0 16px;
-      color: #ffffff;                 /* Texte blanc lisible sur les fonds de couleur */
-      user-select: none;
-    }
-
-    /* Contenu textuel principal */
-    .slide-content {
-      display: flex;
-      flex-direction: column;
       justify-content: center;
+      padding: 0 16px;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
 
-    .slide-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      line-height: 1.2;
+    .carousel-slide.active {
+      opacity: 1;
     }
 
-    .slide-desc {
-      font-size: 0.8rem;
-      opacity: 0.92;
-      line-height: 1.2;
-    }
-
-    /* --- Couleurs spécifiques aux 3 slides --- */
-    .slide-red {
-      background-color: var(--bg-slide-red);   /* Slide 1 : Rouge */
-    }
-
-    .slide-blue {
-      background-color: var(--bg-slide-blue);  /* Slide 2 : Bleu */
-    }
-
-    .slide-green {
-      background-color: var(--bg-slide-green); /* Slide 3 : Vert */
-    }
-
-    /* Controls visuels (indicateurs puces) superposés en bas à droite du carrousel */
-    .carousel-dots {
-      position: absolute;
-      bottom: 6px;
-      right: 12px;
-      display: flex;
-      gap: 5px;
-      z-index: 2;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.4);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .dot.active {
-      background: #ffffff;
-      width: 14px;                   /* La puce active s'allonge horizontalement */
-      border-radius: 3px;
-    }
-
-    /* ==========================================================================
-       4. BOUTON D'ACTION (CTA)
-       ========================================================================== */
-    .cta-button {
+    /* Bouton */
+    .btn-action {
       height: 100%;
       padding: 0 20px;
-      background-color: #0f172a;     /* Bouton sombre contrasté par rapport au fond blanc */
+      background-color: #1f2937;
       color: #ffffff;
       border: none;
       border-radius: 8px;
-      font-size: 0.875rem;
-      font-weight: 600;
+      font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
-      white-space: nowrap;            /* Empêche le texte du bouton de se couper */
-      transition: all 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
     }
 
-    /* Effet d'interaction lors du survol du bouton */
-    .cta-button:hover {
-      background-color: #1e293b;
-      transform: translateY(-1px);
+    .btn-action:hover {
+      background-color: #374151;
     }
 
-    .cta-button:active {
-      transform: translateY(0);
-    }
-
-    /* Flèche icône SVG à l'intérieur du bouton */
-    .cta-button svg {
-      width: 16px;
-      height: 16px;
-      transition: transform 0.2s ease;
-    }
-
-    .cta-button:hover svg {
-      transform: translateX(3px);   /* Déplacement subtil vers la droite au survol */
-    }
+    
 
  /* ==========================================================================
         BOUTON D'ACTION avec gif
@@ -223,210 +104,53 @@
     transform: scale(0.95); /* Effet d'enfoncement au clic */
   }
 
-
-    /* ==========================================================================
-       5. ADAPTABILITÉ MOBILE (RESPONSIVE DESIGN)
-       ========================================================================== */
-    @media (max-width: 600px) {
-      .banner-container {
-        height: auto;               /* Passe en hauteur automatique sur mobile */
-        flex-direction: column;     /* Empile le carrousel et le bouton */
-        padding: 8px;
-      }
-
-      .carousel-section {
-        width: 100%;
-        height: 64px;               /* Conservation d'une taille très compacte */
-      }
-
-      .cta-button {
-        width: 100%;
-        height: 40px;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- 
-    BANDEAU CONTENEUR PRINCIPAL 
-    Hauteur compacte ~2 cm sur écran standard (fond blanc global de la page)
-  -->
   <div class="banner-container">
-    
-    <!-- 1. SECTION CARROUSEL (Partie gauche) -->
-    <div class="carousel-section" id="carouselSection">
-      
-      <!-- Piste contenant les 3 slides alignées côte à côte -->
-      <div class="carousel-track" id="carouselTrack">
-        
-        <!-- SLIDE 1 : FOND ROUGE -->
-        <div class="carousel-slide slide-red">
-          <div class="slide-content">
-            <span class="slide-title">Ouverture des inscriptions le 1er septembre</span>
-            <span class="slide-desc">Profitez de -30% sur toute la gamme aujourd'hui.</span>
-          </div>
-        </div>
-
-        <!-- SLIDE 2 : FOND BLEU -->
-        <div class="carousel-slide slide-blue">
-          <div class="slide-content">
-            <span class="slide-title">Assemblée Générale le 5 novembre (Floralies)</span>
-            <span class="slide-desc">Dès 50€ d'achat partout en France métropolitaine.</span>
-          </div>
-        </div>
-
-        <!-- SLIDE 3 : FOND VERT -->
-        <div class="carousel-slide slide-green">
-          <div class="slide-content">
-            <span class="slide-title">Accueil des nouveaux le 28 novembre</span>
-            <span class="slide-desc">30 jours pour changer d'avis sans aucun frais.</span>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Puces de navigation (générées dynamiquement ou gérées par JS) -->
-      <div class="carousel-dots" id="carouselDots"></div>
+    <div class="carousel-wrapper" id="carousel">
+      <!-- Les diapositives seront générées automatiquement ici -->
     </div>
-
-    <!-- 2. BOUTON D'ACTION vers bénévolats 
-    <a href="#" class="cta-button" id="ctaBtn">
-      <span>En savoir plus</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
-    </a>
-    
-    La balise button assure la réactivité au clic et la gestion du clavier 
-    <button type="button" class="btn-gif" onclick="alert('Bouton cliqué !')">
-        <img src="mon-animation.gif" alt="Description de l'action du bouton" />
-    </button>
-    -->
-
+   
     <button type="button" class="btn-gif" onclick="window.location.href='https://www.randocotedamour.fr/page/3983060-benevolat-rca';">
       <!-- Le GIF est inséré dans l'image -->
       <img src="Votre texte de paragraphe (3).gif" alt="Description de l'action du bouton" />
     </button>
-
-
-
   </div>
 
   <script>
-    /* ==========================================================================
-       LOGIQUE JAVASCRIPT DU CARROUSEL
-       ========================================================================== */
-    document.addEventListener('DOMContentLoaded', () => {
-      // Sélection des éléments du DOM
-      const track = document.getElementById('carouselTrack');
-      const slides = Array.from(track.children);
-      const dotsContainer = document.getElementById('carouselDots');
-      const carouselSection = document.getElementById('carouselSection');
+    let currentIndex = 0;
+    let slidesElements = [];
 
-      let currentIndex = 0;
-      let timer = null;
-      const intervalDelay = 3500; // Défilement automatique toutes les 3,5 secondes
-
-      /* ----------------------------------------------------------------------
-         1. GÉNÉRATION DES PUCES (DOTS)
-         ---------------------------------------------------------------------- */
-      slides.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (index === 0) dot.classList.add('active'); // Première puce active au démarrage
+    // Chargement dynamique de la configuration JSON
+    fetch('config.json')
+      .then(response => response.json())
+      .then(data => {
+        const carousel = document.getElementById('carousel');
         
-        // Permet de cliquer sur une puce pour aller directement à la slide correspondante
-        dot.addEventListener('click', () => {
-          goToSlide(index);
-          resetAutoplay();
+        // Génération des éléments HTML à partir du JSON
+        data.slides.forEach((slide, index) => {
+          const div = document.createElement('div');
+          div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+          div.style.backgroundColor = slide.color;
+          div.textContent = slide.text;
+          carousel.appendChild(div);
         });
 
-        dotsContainer.appendChild(dot);
-      });
+        slidesElements = document.querySelectorAll('.carousel-slide');
 
-      const dots = Array.from(dotsContainer.children);
-
-      /* ----------------------------------------------------------------------
-         2. MISE À JOUR DE LA POSITION DU CARROUSEL
-         ---------------------------------------------------------------------- */
-      function updateCarousel() {
-        // Déplacement horizontal du track grâce au CSS transform translateX
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-        // Mise à jour de l'état actif des puces
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('active', index === currentIndex);
-        });
-      }
-
-      function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
-      }
-
-      function nextSlide() {
-        // Passage à la slide suivante (boucle à 0 après la 3ème slide)
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-      }
-
-      /* ----------------------------------------------------------------------
-         3. DÉFILEMENT AUTOMATIQUE (AUTOPLAY) ET PAUSE AU SURVOL
-         ---------------------------------------------------------------------- */
-      function startAutoplay() {
-        if (!timer) {
-          timer = setInterval(nextSlide, intervalDelay);
-        }
-      }
-
-      function stopAutoplay() {
-        clearInterval(timer);
-        timer = null;
-      }
-
-      function resetAutoplay() {
-        stopAutoplay();
-        startAutoplay();
-      }
-
-      // Interrompt le défilement quand l'utilisateur survole le carrousel avec la souris
-      carouselSection.addEventListener('mouseenter', stopAutoplay);
-      carouselSection.addEventListener('mouseleave', startAutoplay);
-
-      /* ----------------------------------------------------------------------
-         4. GESTION DU BALAYAGE TACTILE (SWIPE MOBILE)
-         ---------------------------------------------------------------------- */
-      let touchStartX = 0;
-      let touchEndX = 0;
-
-      carouselSection.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-      }, { passive: true });
-
-      carouselSection.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-      }, { passive: true });
-
-      function handleSwipe() {
-        const threshold = 30; // Seuil minimum en pixels pour valider un glissement
-        if (touchStartX - touchEndX > threshold) {
-          // Swipe vers la gauche -> slide suivante
-          nextSlide();
-          resetAutoplay();
-        } else if (touchEndX - touchStartX > threshold) {
-          // Swipe vers la droite -> slide précédente
-          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-          updateCarousel();
-          resetAutoplay();
-        }
-      }
-
-      // Lancement initial du carrousel
-      startAutoplay();
-    });
+        // Lancement de la rotation toutes les 4 secondes
+        setInterval(() => {
+          if (slidesElements.length === 0) return;
+          slidesElements[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % slidesElements.length;
+          slidesElements[currentIndex].classList.add('active');
+        }, 4000);
+      })
+      .catch(error => console.error('Erreur lors du chargement de config.json:', error));
   </script>
+
 </body>
 </html>
+
