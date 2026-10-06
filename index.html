@@ -93,28 +93,41 @@
     let slidesElements = [];
 
     // Chargement dynamique du fichier config.json
-    fetch('config.json')
-      .then(response => response.json())
-      .then(data => {
-        // 1. Génération des diapositives de texte
-        const carousel = document.getElementById('carousel');
-        data.slides.forEach((slide, index) => {
-          const div = document.createElement('div');
-          div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-          div.style.backgroundColor = slide.color;
-          div.textContent = slide.text;
-          carousel.appendChild(div);
-        });
+   fetch("https://script.google.com/macros/s/AKfycbyBz5rQb6eNjmhdd1Sj9ZXO44XLMZbEYqAjnJ5_P4pht-ype3wM3JxFU6L4sZGfRJrv/exec")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Impossible de récupérer la configuration');
+    }
+    return response.json();
+  })
+  .then(data => {
 
-        slidesElements = document.querySelectorAll('.carousel-slide');
+    // 1. Génération des diapositives de texte
+    const carousel = document.getElementById('carousel');
 
-        // 2. Configuration du bouton GIF et de son lien
-        if (data.gif_button) {
-          document.getElementById('gif-button-img').src = data.gif_button;
-        }
-        if (data.button_link) {
-          document.getElementById('gif-button-link').href = data.button_link;
-        }
+    data.slides.forEach((slide, index) => {
+      const div = document.createElement('div');
+      div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+      div.style.backgroundColor = slide.color;
+      div.textContent = slide.text;
+      carousel.appendChild(div);
+    });
+
+    slidesElements = document.querySelectorAll('.carousel-slide');
+
+    // 2. Configuration du bouton GIF et de son lien
+    if (data.gif_button) {
+      document.getElementById('gif-button-img').src = data.gif_button;
+    }
+
+    if (data.button_link) {
+      document.getElementById('gif-button-link').href = data.button_link;
+    }
+
+  })
+  .catch(error => {
+    console.error('Erreur de chargement de la configuration :', error);
+  });
 
         // 3. Défilement automatique du carrousel toutes les 4 secondes
         setInterval(() => {
