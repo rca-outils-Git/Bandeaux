@@ -87,7 +87,7 @@
   </style>
 </head>
 <body>
-  <p> Avec lien</p>
+  <p> Avec lien 2</p>
   <div class="banner-container">
     <!-- Zone Carrousel -->
     <div class="carousel-wrapper" id="carousel">
@@ -99,15 +99,15 @@
       <img id="gif-button-img" src="" alt="Bouton d'action">
     </a>
 
-    <p> Avec lien</p>
+    <p> Avec lien 2</p>
   </div>
 
   <script>
-    let currentIndex = 0;
+   let currentIndex = 0;
     let slidesElements = [];
 
     // Chargement dynamique depuis Google Apps Script
-    fetch("https://script.google.com/macros/s/AKfycbw9IMMx-DiVXYhKBXGaMVRiJ6kUsjiptVU6fTHFuGEyqhENY4D8xKItVycrleKbeADg/exec")
+    fetch("https://script.google.com/macros/s/AKfycbxmbY5WIgEJ9JJ-woQgfR5oF7j79eCSys_Wl-cxDmpaHt-ay1HPtPRnQRK0-aXbqHzK/exec")
       .then(response => {
         if (!response.ok) {
           throw new Error('Impossible de récupérer la configuration');
@@ -120,16 +120,30 @@
 
         if (data.slides && Array.isArray(data.slides)) {
           data.slides.forEach((slide, index) => {
-            // Création d'un élément 'a' (lien) au lieu d'un 'div'
             const slideLink = document.createElement('a');
             slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
             slideLink.style.backgroundColor = slide.color || '#333';
             slideLink.textContent = slide.text || '';
             
-            // Si un lien est fourni pour ce texte dans les données
-            if (slide.link || slide.text_link) {
-              slideLink.href = slide.link || slide.text_link;
-              slideLink.target = "_top"; // Ouvre dans la page principale (si dans une iframe)
+            // Vérification et nettoyage de l'URL du lien
+            let targetUrl = slide.link || slide.text_link || '';
+            if (targetUrl && targetUrl.trim() !== "") {
+              // Ajoute https:// si l'utilisateur l'a oublié dans Google Sheets
+              if (!targetUrl.startsWith('http://') && !targetUrl.startsWith('https://')) {
+                targetUrl = 'https://' + targetUrl.trim();
+              }
+              
+              slideLink.href = targetUrl;
+              slideLink.target = "_top"; // Redirige toute la fenêtre principale
+              
+              // Sécurité complémentaire pour déclencher l'ouverture si le clic est capturé par un parent
+              slideLink.addEventListener('click', (e) => {
+                if (targetUrl) {
+                  window.top.location.href = targetUrl;
+                }
+              });
+            } else {
+              slideLink.removeAttribute('href'); // Supprime la main/pointer si pas de lien
             }
 
             carousel.appendChild(slideLink);
@@ -144,11 +158,15 @@
 
         if (data.gif_button) {
           gifImg.src = data.gif_button;
-          gifLink.style.display = 'inline-block'; // Affiche le bouton si une image est présente
+          gifLink.style.display = 'inline-block';
         }
 
         if (data.button_link) {
-          gifLink.href = data.button_link;
+          let btnUrl = data.button_link.trim();
+          if (!btnUrl.startsWith('http://') && !btnUrl.startsWith('https://')) {
+            btnUrl = 'https://' + btnUrl;
+          }
+          gifLink.href = btnUrl;
         }
       })
       .catch(error => {
@@ -162,6 +180,7 @@
       currentIndex = (currentIndex + 1) % slidesElements.length;
       slidesElements[currentIndex].classList.add('active');
     }, 4000);
+    
   </script>
 
 </body>
