@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bandeau Carrousel avec Bouton GIF</title>
+  <title>Bandeau Carrousel avec Bouton GIF et Textes Cliquables</title>
   <style>
     body {
       margin: 0;
@@ -33,6 +33,7 @@
       border-radius: 8px;
     }
 
+    /* Diapositives (balises <a> pour rendre le texte cliquable) */
     .carousel-slide {
       position: absolute;
       inset: 0;
@@ -44,8 +45,19 @@
       font-weight: bold;
       font-size: 15px;
       text-align: center;
+      text-decoration: none; /* Supprime le soulignement du lien */
       opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+      transition: opacity 0.5s ease-in-out, transform 0.2s ease;
+      cursor: default;
+    }
+
+    /* Rendre le curseur cliquable seulement si la slide a un lien */
+    .carousel-slide[href] {
+      cursor: pointer;
+    }
+
+    .carousel-slide[href]:hover {
+      opacity: 0.95; /* Effet léger au survol */
     }
 
     .carousel-slide.active {
@@ -84,7 +96,7 @@
 
     <!-- Zone Bouton GIF (remplie dynamiquement via l'API) -->
     <a id="gif-button-link" href="#" class="btn-gif-link" target="_top" style="display: none;">
-      <img id="gif-button-img" src="" alt="Bouton xxxx">
+      <img id="gif-button-img" src="" alt="Bouton d'action">
     </a>
   </div>
 
@@ -93,7 +105,7 @@
     let slidesElements = [];
 
     // Chargement dynamique depuis Google Apps Script
-    fetch("https://script.google.com/macros/s/AKfycbxmbY5WIgEJ9JJ-woQgfR5oF7j79eCSys_Wl-cxDmpaHt-ay1HPtPRnQRK0-aXbqHzK/exec")
+    fetch("https://script.google.com/macros/s/AKfycbw9IMMx-DiVXYhKBXGaMVRiJ6kUsjiptVU6fTHFuGEyqhENY4D8xKItVycrleKbeADg/exec")
       .then(response => {
         if (!response.ok) {
           throw new Error('Impossible de récupérer la configuration');
@@ -106,11 +118,19 @@
 
         if (data.slides && Array.isArray(data.slides)) {
           data.slides.forEach((slide, index) => {
-            const div = document.createElement('div');
-            div.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-            div.style.backgroundColor = slide.color || '#333';
-            div.textContent = slide.text || '';
-            carousel.appendChild(div);
+            // Création d'un élément 'a' (lien) au lieu d'un 'div'
+            const slideLink = document.createElement('a');
+            slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+            slideLink.style.backgroundColor = slide.color || '#333';
+            slideLink.textContent = slide.text || '';
+            
+            // Si un lien est fourni pour ce texte dans les données
+            if (slide.link || slide.text_link) {
+              slideLink.href = slide.link || slide.text_link;
+              slideLink.target = "_top"; // Ouvre dans la page principale (si dans une iframe)
+            }
+
+            carousel.appendChild(slideLink);
           });
 
           slidesElements = document.querySelectorAll('.carousel-slide');
