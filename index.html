@@ -131,24 +131,39 @@
       return cleanUrl;
     }
 
-    fetch("https://script.google.com/macros/s/AKfycbxBkDyp62_PLdZ68XjIkeSwpIXsAkcsqpfiy8HJmZqGjmc8JoGXeEj32lWVZAKabn4P/exec")
+    // ÉTAPE 1 : Récupération de l'URL du script depuis config.json
+    fetch('config.json')
       .then(response => {
         if (!response.ok) {
-          throw new Error('Impossible de récupérer la configuration');
+          throw new Error('Impossible de lire config.json');
+        }
+        return response.json();
+      })
+      .then(config => {
+        if (!config.script_url) {
+          throw new Error('Propriété script_url manquante dans config.json');
+        }
+        
+        // ÉTAPE 2 : Appel du Google Apps Script grâce à l'URL dynamique
+        return fetch(config.script_url);
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Impossible de récupérer la configuration Apps Script');
         }
         return response.json();
       })
       .then(data => {
         const carousel = document.getElementById('carousel');
 
-        // 1. Génération des diapositives
+        // 1. Génération des diapositives (Textes + GIFs optionnels)
         if (data.slides && Array.isArray(data.slides)) {
           data.slides.forEach((slide, index) => {
             const slideLink = document.createElement('a');
             slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
             slideLink.style.backgroundColor = slide.color || '#333';
-            
-            // A) Ajout du GIF optionnel s'il est spécifié dans la slide
+
+            // A) GIF / Image optionnelle dans la slide
             if (slide.gif && slide.gif.trim() !== '') {
               const img = document.createElement('img');
               img.src = slide.gif.trim();
@@ -157,13 +172,13 @@
               slideLink.appendChild(img);
             }
 
-            // B) Ajout du texte de la slide
+            // B) Texte de la slide
             const spanText = document.createElement('span');
             spanText.className = 'slide-text';
             spanText.textContent = slide.text || '';
             slideLink.appendChild(spanText);
 
-            // C) Gestion du lien
+            // C) Lien du texte
             const targetUrl = formatUrl(slide.link || slide.text_link);
             if (targetUrl) {
               slideLink.href = targetUrl;
@@ -186,7 +201,7 @@
           slidesElements = document.querySelectorAll('.carousel-slide');
         }
 
-        // 2. Configuration du bouton GIF latéral
+        // 2. Configuration du bouton GIF principal (à droite)
         const gifLink = document.getElementById('gif-button-link');
         const gifImg = document.getElementById('gif-button-img');
 
@@ -209,10 +224,10 @@
         }
       })
       .catch(error => {
-        console.error('Erreur de chargement de la configuration :', error);
+        console.error('Erreur lors du chargement des configurations :', error);
       });
 
-    // 3. Défilement automatique
+    // 3. Défilement automatique du carrousel toutes les 4 secondes
     setInterval(() => {
       if (slidesElements.length === 0) return;
       slidesElements[currentIndex].classList.remove('active');
