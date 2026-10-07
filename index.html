@@ -45,23 +45,24 @@
       font-weight: bold;
       font-size: 15px;
       text-align: center;
-      text-decoration: none; /* Supprime le soulignement du lien */
+      text-decoration: none;
       opacity: 0;
-      transition: opacity 0.5s ease-in-out, transform 0.2s ease;
-      cursor: default;
-    }
-
-    /* Rendre le curseur cliquable seulement si la slide a un lien */
-    .carousel-slide[href] {
-      cursor: pointer;
-    }
-
-    .carousel-slide[href]:hover {
-      opacity: 0.95; /* Effet léger au survol */
+      pointer-events: none; /* Empeche le clic sur les diapositives masquées */
+      transition: opacity 0.5s ease-in-out;
+      z-index: 1;
     }
 
     .carousel-slide.active {
       opacity: 1;
+      pointer-events: auto; /* Active le clic SEULEMENT sur la diapositive visible */
+      z-index: 2;
+    }
+      /* Rendre le curseur cliquable seulement si la slide a un lien */
+    .carousel-slide[href] {
+      cursor: pointer;
+    }
+     .carousel-slide[href]:hover {
+      opacity: 0.95; /* Effet léger au survol */
     }
 
     /* Conteneur et style du bouton GIF */
@@ -87,7 +88,7 @@
   </style>
 </head>
 <body>
-  <p> Avec lien 3</p>
+  <p> Avec lien 4</p>
   <div class="banner-container">
     <!-- Zone Carrousel -->
     <div class="carousel-wrapper" id="carousel">
