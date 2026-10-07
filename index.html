@@ -118,122 +118,112 @@
   </div>
 
   <script>
-    let currentIndex = 0;
-    let slidesElements = [];
+  <script>
+  let currentIndex = 0;
+  let slidesElements = [];
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmbY5WIgEJ9JJ-woQgfR5oF7j79eCSys_Wl-cxDmpaHt-ay1HPtPRnQRK0-aXbqHzK/exec";
 
-    function formatUrl(url) {
-      if (!url || typeof url !== 'string') return '';
-      let cleanUrl = url.trim();
-      if (!cleanUrl) return '';
-      if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
-        cleanUrl = 'https://' + cleanUrl;
-      }
-      return cleanUrl;
+  function formatUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    let cleanUrl = url.trim();
+    if (!cleanUrl) return '';
+    if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+      cleanUrl = 'https://' + cleanUrl;
     }
+    return cleanUrl;
+  }
 
-    // ÉTAPE 1 : Récupération de l'URL du script depuis config.json
-    fetch('config.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Impossible de lire config.json');
-        }
-        return response.json();
-      })
-      .then(config => {
-        if (!config.script_url) {
-          throw new Error('Propriété script_url manquante dans config.json');
-        }
-        
-        // ÉTAPE 2 : Appel du Google Apps Script grâce à l'URL dynamique
-        return fetch(config.script_url);
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Impossible de récupérer la configuration Apps Script');
-        }
-        return response.json();
-      })
-      .then(data => {
-        const carousel = document.getElementById('carousel');
+  function renderCarousel(data) {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = ''; // Réinitialise pour éviter les doublons
 
-        // 1. Génération des diapositives (Textes + GIFs optionnels)
-        if (data.slides && Array.isArray(data.slides)) {
-          data.slides.forEach((slide, index) => {
-            const slideLink = document.createElement('a');
-            slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-            slideLink.style.backgroundColor = slide.color || '#333';
+    if (data.slides && Array.isArray(data.slides)) {
+      data.slides.forEach((slide, index) => {
+        const slideLink = document.createElement('a');
+        slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+        slideLink.style.backgroundColor = slide.color || '#333';
 
-            // A) GIF / Image optionnelle dans la slide
-            if (slide.gif && slide.gif.trim() !== '') {
-              const img = document.createElement('img');
-              img.src = slide.gif.trim();
-              img.alt = "Illustration";
-              img.className = 'slide-gif';
-              slideLink.appendChild(img);
-            }
-
-            // B) Texte de la slide
-            const spanText = document.createElement('span');
-            spanText.className = 'slide-text';
-            spanText.textContent = slide.text || '';
-            slideLink.appendChild(spanText);
-
-            // C) Lien du texte
-            const targetUrl = formatUrl(slide.link || slide.text_link);
-            if (targetUrl) {
-              slideLink.href = targetUrl;
-              slideLink.target = "_top";
-              slideLink.classList.add('is-clickable');
-
-              slideLink.addEventListener('click', (e) => {
-                e.preventDefault();
-                try {
-                  window.top.location.href = targetUrl;
-                } catch (err) {
-                  window.open(targetUrl, '_blank');
-                }
-              });
-            }
-
-            carousel.appendChild(slideLink);
-          });
-
-          slidesElements = document.querySelectorAll('.carousel-slide');
+        if (slide.gif && slide.gif.trim() !== '') {
+          const img = document.createElement('img');
+          img.src = slide.gif.trim();
+          img.alt = "Illustration";
+          img.className = 'slide-gif';
+          slideLink.appendChild(img);
         }
 
-        // 2. Configuration du bouton GIF principal (à droite)
-        const gifLink = document.getElementById('gif-button-link');
-        const gifImg = document.getElementById('gif-button-img');
+        const spanText = document.createElement('span');
+        spanText.className = 'slide-text';
+        spanText.textContent = slide.text || '';
+        slideLink.appendChild(spanText);
 
-        if (data.gif_button) {
-          gifImg.src = data.gif_button;
-          gifLink.style.display = 'inline-block';
-        }
-
-        const buttonUrl = formatUrl(data.button_link);
-        if (buttonUrl) {
-          gifLink.href = buttonUrl;
-          gifLink.addEventListener('click', (e) => {
+        const targetUrl = formatUrl(slide.link || slide.text_link);
+        if (targetUrl) {
+          slideLink.href = targetUrl;
+          slideLink.target = "_top";
+          slideLink.classList.add('is-clickable');
+          slideLink.addEventListener('click', (e) => {
             e.preventDefault();
-            try {
-              window.top.location.href = buttonUrl;
-            } catch (err) {
-              window.open(buttonUrl, '_blank');
-            }
+            try { window.top.location.href = targetUrl; } 
+            catch (err) { window.open(targetUrl, '_blank'); }
           });
         }
-      })
-      .catch(error => {
-        console.error('Erreur lors du chargement des configurations :', error);
+
+        carousel.appendChild(slideLink);
       });
 
-    // 3. Défilement automatique du carrousel toutes les 4 secondes
-    setInterval(() => {
-      if (slidesElements.length === 0) return;
-      slidesElements[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % slidesElements.length;
-      slidesElements[currentIndex].classList.add('active');
-    }, 4000);
+      slidesElements = document.querySelectorAll('.carousel-slide');
+    }
+
+    // Bouton GIF principal
+    const gifLink = document.getElementById('gif-button-link');
+    const gifImg = document.getElementById('gif-button-img');
+
+    if (data.gif_button) {
+      gifImg.src = data.gif_button;
+      gifLink.style.display = 'inline-block';
+    }
+
+    const buttonUrl = formatUrl(data.button_link);
+    if (buttonUrl) {
+      gifLink.href = buttonUrl;
+      gifLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        try { window.top.location.href = buttonUrl; } 
+        catch (err) { window.open(buttonUrl, '_blank'); }
+      });
+    }
+  }
+
+  // ⚡ STRATÉGIE DE CACHE ULTRA RAPIDE :
+  // 1. Charger immédiatement depuis le LocalStorage si disponible (affichage instantané < 10ms)
+  const cachedData = localStorage.getItem('banner_config_cache');
+  if (cachedData) {
+    try {
+      renderCarousel(JSON.parse(cachedData));
+    } catch(e) { console.error(e); }
+  }
+
+  // 2. Mettre à jour les données en arrière-plan depuis Google Apps Script
+  fetch(SCRIPT_URL)
+    .then(response => response.json())
+    .then(data => {
+      // Sauvegarde en cache pour la prochaine visite
+      localStorage.setItem('banner_config_cache', JSON.stringify(data));
+      // Met à jour le carrousel si ce n'était pas encore affiché
+      if (!cachedData) {
+        renderCarousel(data);
+      }
+    })
+    .catch(err => console.error("Erreur de chargement distant :", err));
+
+  // 3. Défilement automatique
+  setInterval(() => {
+    if (slidesElements.length === 0) return;
+    slidesElements[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % slidesElements.length;
+    slidesElements[currentIndex].classList.add('active');
+  }, 4000);
+</script>
   </script>
 
 </body>
