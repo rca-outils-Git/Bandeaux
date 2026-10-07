@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bandeau Carrousel avec Bouton GIF</title>
+  <title>Bandeau Carrousel avec Texte, GIF optionnel et Bouton</title>
   <style>
     body {
       margin: 0;
@@ -12,7 +12,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Structure du bandeau (~2 cm de hauteur = 76px) */
+    /* Structure principale (~2 cm de hauteur = 76px) */
     .banner-container {
       display: flex;
       align-items: center;
@@ -40,6 +40,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      gap: 12px; /* Espace entre le texte et le GIF optionnel */
       padding: 0 16px;
       color: #ffffff;
       font-weight: bold;
@@ -47,30 +48,39 @@
       text-align: center;
       text-decoration: none;
       opacity: 0;
-      pointer-events: none; /* Désactive le clic sur les diapos masquées */
+      pointer-events: none;
       transition: opacity 0.5s ease-in-out;
       z-index: 1;
       box-sizing: border-box;
     }
 
-    /* Style quand la diapositive est active */
     .carousel-slide.active {
       opacity: 1;
-      pointer-events: auto; /* Réactive le clic uniquement sur la diapositive visible */
+      pointer-events: auto;
       z-index: 2;
     }
 
-    /* Style spécifique si la slide contient un lien valide */
     .carousel-slide.is-clickable {
       cursor: pointer !important;
     }
 
     .carousel-slide.is-clickable:hover {
       opacity: 0.9;
-      text-decoration: underline; /* Indique clairement que le texte est cliquable */
     }
 
-    /* Conteneur et style du bouton GIF */
+    .carousel-slide.is-clickable:hover .slide-text {
+      text-decoration: underline;
+    }
+
+    /* Image / GIF optionnel dans la slide */
+    .slide-gif {
+      height: 48px; /* Taille adaptée à la hauteur du bandeau */
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    /* Conteneur et style du bouton GIF principal (à droite) */
     .btn-gif-link {
       display: inline-block;
       height: 100%;
@@ -96,13 +106,12 @@
 <body>
 
   <div class="banner-container">
-    <p>Lien 5</p>
     <!-- Zone Carrousel -->
     <div class="carousel-wrapper" id="carousel">
       <!-- Les diapositives seront injectées par le script -->
     </div>
 
-    <!-- Zone Bouton GIF (remplie dynamiquement via l'API) -->
+    <!-- Zone Bouton GIF principal -->
     <a id="gif-button-link" href="#" class="btn-gif-link" target="_top" style="display: none;">
       <img id="gif-button-img" src="" alt="Bouton d'action">
     </a>
@@ -112,7 +121,6 @@
     let currentIndex = 0;
     let slidesElements = [];
 
-    // Fonction utilitaire pour nettoyer et formater les URLs
     function formatUrl(url) {
       if (!url || typeof url !== 'string') return '';
       let cleanUrl = url.trim();
@@ -123,8 +131,7 @@
       return cleanUrl;
     }
 
-    // Chargement dynamique depuis Google Apps Script
-    fetch("https://script.google.com/macros/s/AKfycbw9IMMx-DiVXYhKBXGaMVRiJ6kUsjiptVU6fTHFuGEyqhENY4D8xKItVycrleKbeADg/exec")
+    fetch("https://script.google.com/macros/s/AKfycbwM0ug87pf4MPkubMWLrJRq0u-l42fBMlZ4AXcQWP4/dev")
       .then(response => {
         if (!response.ok) {
           throw new Error('Impossible de récupérer la configuration');
@@ -134,23 +141,35 @@
       .then(data => {
         const carousel = document.getElementById('carousel');
 
-        // 1. Génération des diapositives de texte
+        // 1. Génération des diapositives
         if (data.slides && Array.isArray(data.slides)) {
           data.slides.forEach((slide, index) => {
             const slideLink = document.createElement('a');
             slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
             slideLink.style.backgroundColor = slide.color || '#333';
-            slideLink.textContent = slide.text || '';
             
-            // Récupération de l'URL (prend en charge 'link' ou 'text_link')
+            // A) Ajout du GIF optionnel s'il est spécifié dans la slide
+            if (slide.gif && slide.gif.trim() !== '') {
+              const img = document.createElement('img');
+              img.src = slide.gif.trim();
+              img.alt = "Illustration";
+              img.className = 'slide-gif';
+              slideLink.appendChild(img);
+            }
+
+            // B) Ajout du texte de la slide
+            const spanText = document.createElement('span');
+            spanText.className = 'slide-text';
+            spanText.textContent = slide.text || '';
+            slideLink.appendChild(spanText);
+
+            // C) Gestion du lien
             const targetUrl = formatUrl(slide.link || slide.text_link);
-            
             if (targetUrl) {
               slideLink.href = targetUrl;
               slideLink.target = "_top";
               slideLink.classList.add('is-clickable');
 
-              // Forçage de la redirection au clic (contourne le blocage d'iframe)
               slideLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 try {
@@ -167,7 +186,7 @@
           slidesElements = document.querySelectorAll('.carousel-slide');
         }
 
-        // 2. Configuration du bouton GIF et de son lien
+        // 2. Configuration du bouton GIF latéral
         const gifLink = document.getElementById('gif-button-link');
         const gifImg = document.getElementById('gif-button-img');
 
@@ -193,7 +212,7 @@
         console.error('Erreur de chargement de la configuration :', error);
       });
 
-    // 3. Défilement automatique du carrousel toutes les 4 secondes
+    // 3. Défilement automatique
     setInterval(() => {
       if (slidesElements.length === 0) return;
       slidesElements[currentIndex].classList.remove('active');
