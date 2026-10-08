@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel de Textes Moderne</title>
+    <!-- Chargement de Tailwind CSS pour la mise en page responsive et épurée -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons pour des icônes élégantes -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+
+        /* Animation des diapositives */
+        .carousel-slide {
+            opacity: 0;
+            transform: translateX(30px) scale(0.98);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        /* Effet de brillance et verre teinté pour la carte */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Barre de progression du défilement auto */
+        .progress-bar {
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 flex flex-col items-center justify-center p-4 sm:p-6 overflow-x-hidden">
+
+    <!-- Arrière-plan décoratif avec halos lumineux -->
+    <div class="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 right-1/4 w-[350px] h-[350px] bg-violet-600/15 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <main class="w-full max-w-3xl z-10">
+        
+        <!-- En-tête -->
+        <div class="text-center mb-8">
+            <span class="inline-block px-3 py-1 text-xs font-semibold tracking-wider text-indigo-400 uppercase bg-indigo-500/10 rounded-full border border-indigo-500/20 mb-3">
+                Inspiration & Vision
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+                Découvrez nos Enseignements
+            </h1>
+        </div>
+
+        <!-- Conteneur principal du Carrousel -->
+        <div id="carousel-container" class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden group">
+            
+            <!-- Barre de progression -->
+            <div class="absolute top-0 left-0 right-0 h-1 bg-slate-800/50">
+                <div id="progress" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-violet-500 w-0"></div>
+            </div>
+
+            <!-- Indicateur "En pause" lors du survol -->
+            <div id="pause-badge" class="absolute top-4 right-4 text-xs font-medium text-slate-400 bg-slate-800/60 px-2.5 py-1 rounded-full opacity-0 transition-opacity duration-300 flex items-center gap-1.5 border border-slate-700/50">
+                <i data-lucide="pause" class="w-3 h-3 text-indigo-400"></i> Pause au survol
+            </div>
+
+            <!-- Zone de contenu des textes (Diapositives) -->
+            <div class="min-h-[220px] sm:min-h-[200px] flex items-center justify-center text-center px-2 my-4">
+                
+                <!-- Diapositive 1 -->
+                <div class="carousel-slide active" data-index="0">
+                    <div class="p-3 bg-indigo-500/10 rounded-2xl mb-4 text-indigo-400">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-slate-200 leading-relaxed max-w-xl">
+                        « La simplicité est la sophistication ultime. Elle permet de concentrer l'attention sur l'essentiel et de créer une expérience mémorable. »
+                    </blockquote>
+                    <p class="mt-4 text-sm font-semibold text-indigo-400">
+                        — Leonardo da Vinci
+                    </p>
+                </div>
+
+                <!-- Diapositive 2 -->
+                <div class="carousel-slide" data-index="1">
+                    <div class="p-3 bg-violet-500/10 rounded-2xl mb-4 text-violet-400">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-slate-200 leading-relaxed max-w-xl">
+                        « L'innovation ne vient pas du changement des choses, mais de la transformation de la façon dont nous les percevons. »
+                    </blockquote>
+                    <p class="mt-4 text-sm font-semibold text-violet-400">
+                        — Steve Jobs
+                    </p>
+                </div>
+
+                <!-- Diapositive 3 -->
+                <div class="carousel-slide" data-index="2">
+                    <div class="p-3 bg-emerald-500/10 rounded-2xl mb-4 text-emerald-400">
+                        <i data-lucide="compass" class="w-6 h-6"></i>
+                    </div>
+                    <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-slate-200 leading-relaxed max-w-xl">
+                        « Le design n'est pas seulement ce à quoi cela ressemble. Le design, c'est la façon dont cela fonctionne. »
+                    </blockquote>
+                    <p class="mt-4 text-sm font-semibold text-emerald-400">
+                        — Antoine de Saint-Exupéry
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Navigation et Puces -->
+            <div class="flex items-center justify-between pt-6 border-t border-slate-800/80 mt-2">
+                
+                <!-- Bouton Précédent -->
+                <button id="prev-btn" aria-label="Diapositive précédente" class="p-2.5 rounded-xl bg-slate-800/50 hover:bg-slate-700/60 text-slate-300 hover:text-white transition-all duration-200 border border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 active:scale-95">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Indicateurs / Points (Dots) -->
+                <div class="flex items-center space-x-2.5" id="dots-container">
+                    <button class="dot w-8 h-2 rounded-full bg-indigo-500 transition-all duration-300" aria-label="Aller au texte 1" data-index="0"></button>
+                    <button class="dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300" aria-label="Aller au texte 2" data-index="1"></button>
+                    <button class="dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300" aria-label="Aller au texte 3" data-index="2"></button>
+                </div>
+
+                <!-- Bouton Suivant -->
+                <button id="next-btn" aria-label="Diapositive suivante" class="p-2.5 rounded-xl bg-slate-800/50 hover:bg-slate-700/60 text-slate-300 hover:text-white transition-all duration-200 border border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 active:scale-95">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Attente du chargement complet du DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialisation des icônes Lucide
+            lucide.createIcons();
+
+            // Éléments du DOM
+            const container = document.getElementById('carousel-container');
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress');
+            const pauseBadge = document.getElementById('pause-badge');
+
+            // État du carrousel
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            const autoPlayDuration = 5000; // 5 secondes par diapositive
+            let intervalId = null;
+            let progressIntervalId = null;
+            let startTime = 0;
+            let elapsedTime = 0;
+            let isPaused = false;
+
+            // Mettre à jour l'affichage de la diapositive
+            function updateCarousel(newIndex) {
+                // Masquer la diapositive actuelle
+                slides[currentIndex].classList.remove('active');
+                
+                // Mettre à jour les puces
+                dots[currentIndex].className = 'dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300';
+                
+                // Définir le nouvel index
+                currentIndex = (newIndex + totalSlides) % totalSlides;
+
+                // Afficher la nouvelle diapositive
+                slides[currentIndex].classList.add('active');
+
+                // Mettre à jour la puce active
+                dots[currentIndex].className = 'dot w-8 h-2 rounded-full bg-indigo-500 transition-all duration-300';
+
+                // Réinitialiser la barre de progression
+                resetProgress();
+            }
+
+            // Gestion de la barre de progression
+            function startProgress() {
+                if (isPaused) return;
+                
+                startTime = Date.now() - elapsedTime;
+                progressIntervalId = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    const percentage = Math.min((elapsedTime / autoPlayDuration) * 100, 100);
+                    progressBar.style.width = `${percentage}%`;
+
+                    if (elapsedTime >= autoPlayDuration) {
+                        nextSlide();
+                    }
+                }, 20);
+            }
+
+            function stopProgress() {
+                clearInterval(progressIntervalId);
+            }
+
+            function resetProgress() {
+                stopProgress();
+                elapsedTime = 0;
+                progressBar.style.width = '0%';
+                startProgress();
+            }
+
+            // Actions de navigation
+            function nextSlide() {
+                updateCarousel(currentIndex + 1);
+            }
+
+            function prevSlide() {
+                updateCarousel(currentIndex - 1);
+            }
+
+            // Événements des boutons
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+            });
+
+            // Événements des indicateurs (puces)
+            dots.forEach((dot) => {
+                dot.addEventListener('click', (e) => {
+                    const targetIndex = parseInt(e.target.getAttribute('data-index'));
+                    if (targetIndex !== currentIndex) {
+                        updateCarousel(targetIndex);
+                    }
+                });
+            });
+
+            // Mise en pause au survol
+            container.addEventListener('mouseenter', () => {
+                isPaused = true;
+                stopProgress();
+                pauseBadge.style.opacity = '1';
+            });
+
+            container.addEventListener('mouseleave', () => {
+                isPaused = false;
+                startProgress();
+                pauseBadge.style.opacity = '0';
+            });
+
+            // Support des touches du clavier (Flèches gauche / droite)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                }
+            });
+
+            // Démarrer le carrousel
+            startProgress();
+        });
+    </script>
+</body>
+</html>
+*/
