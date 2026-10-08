@@ -1,10 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Bandeau Carrousel avec Texte, GIF optionnel et Bouton</title>
+
+
   <style>
+
     body {
       margin: 0;
       padding: 0;
@@ -12,7 +23,9 @@
       font-family: Arial, sans-serif;
     }
 
+
     /* Structure principale (~2 cm de hauteur = 76px) */
+
     .banner-container {
       display: flex;
       align-items: center;
@@ -24,7 +37,9 @@
       gap: 16px;
     }
 
-    /* Conteneur du carrousel de textes */
+
+    /* Conteneur du carrousel */
+
     .carousel-wrapper {
       flex: 1;
       height: 100%;
@@ -33,26 +48,35 @@
       border-radius: 8px;
     }
 
+
     /* Diapositives */
+
     .carousel-slide {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px; /* Espace entre le texte et le GIF optionnel */
+      gap: 12px;
       padding: 0 16px;
+
       color: #ffffff;
       font-weight: bold;
       font-size: 15px;
       text-align: center;
       text-decoration: none;
+
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.5s ease-in-out;
+
+      transition:
+        opacity 0.5s ease-in-out;
+
       z-index: 1;
+
       box-sizing: border-box;
     }
+
 
     .carousel-slide.active {
       opacity: 1;
@@ -60,40 +84,52 @@
       z-index: 2;
     }
 
+
     .carousel-slide.is-clickable {
       cursor: pointer !important;
     }
+
 
     .carousel-slide.is-clickable:hover {
       opacity: 0.9;
     }
 
+
     .carousel-slide.is-clickable:hover .slide-text {
       text-decoration: underline;
     }
 
-    /* Image / GIF optionnel dans la slide */
+
+    /* Image / GIF optionnel */
+
     .slide-gif {
-      height: 48px; /* Taille adaptée à la hauteur du bandeau */
+      height: 48px;
       width: auto;
       object-fit: contain;
       flex-shrink: 0;
     }
 
-    /* Conteneur et style du bouton GIF principal (à droite) */
+
+    /* Bouton GIF principal */
+
     .btn-gif-link {
       display: inline-block;
       height: 100%;
       cursor: pointer;
       border-radius: 8px;
       overflow: hidden;
-      transition: transform 0.2s ease;
+
+      transition:
+        transform 0.2s ease;
+
       z-index: 3;
     }
+
 
     .btn-gif-link:hover {
       transform: scale(1.04);
     }
+
 
     .btn-gif-link img {
       display: block;
@@ -101,129 +137,385 @@
       width: auto;
       object-fit: contain;
     }
+
   </style>
+
 </head>
+
+
 <body>
 
+
   <div class="banner-container">
+
+
     <!-- Zone Carrousel -->
-    <div class="carousel-wrapper" id="carousel">
-      <!-- Les diapositives seront injectées par le script -->
-    </div>
+
+    <div
+      class="carousel-wrapper"
+      id="carousel"
+    ></div>
+
 
     <!-- Zone Bouton GIF principal -->
-    <a id="gif-button-link" href="#" class="btn-gif-link" target="_top" style="display: none;">
-      <img id="gif-button-img" src="" alt="Bouton d'action">
+
+    <a
+      id="gif-button-link"
+      href="#"
+      class="btn-gif-link"
+      target="_top"
+      style="display: none;"
+    >
+
+      <img
+        id="gif-button-img"
+        src=""
+        alt="Bouton d'action"
+      >
+
     </a>
+
   </div>
 
+
   <script>
-  let currentIndex = 0;
-  let slidesElements = [];
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMzxzNClQdalBcDItj-RHmQ-oSzrKhj5JrtYXdP33roXa6U9Y-fbTZGWZhq4bcLmMn/exec";
 
-  function formatUrl(url) {
-    if (!url || typeof url !== 'string') return '';
-    let cleanUrl = url.trim();
-    if (!cleanUrl) return '';
-    if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
-      cleanUrl = 'https://' + cleanUrl;
-    }
-    return cleanUrl;
-  }
 
-  function renderCarousel(data) {
-    const carousel = document.getElementById('carousel');
-    carousel.innerHTML = ''; // Réinitialise pour éviter les doublons
+    /***************************************************
+     * DONNÉES GÉNÉRÉES PAR GOOGLE APPS SCRIPT
+     ***************************************************/
 
-    if (data.slides && Array.isArray(data.slides)) {
-      data.slides.forEach((slide, index) => {
-        const slideLink = document.createElement('a');
-        slideLink.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
-        slideLink.style.backgroundColor = slide.color || '#333';
+    const data = {"slides":[{"text":"randomania","color":"#dc2626","link":"https://sites.google.com/rando-ca.fr/randomania-2026/accueil","gif":""},{"text":"missions en cours rejoignez nos bénévoles","color":"#2563eb","link":"https://www.randocotedamour.fr/page/3983060-benevolat-rca","gif":"nouveau.gif"},{"text":"Troisième texte ","color":"#16a34a","link":"https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026","gif":""}],"gif_button":"","button_link":"https://www.randocotedamour.fr/page/3983060-benevolat-rca"};
 
-        if (slide.gif && slide.gif.trim() !== '') {
-          const img = document.createElement('img');
-          img.src = slide.gif.trim();
-          img.alt = "Illustration";
-          img.className = 'slide-gif';
-          slideLink.appendChild(img);
-        }
 
-        const spanText = document.createElement('span');
-        spanText.className = 'slide-text';
-        spanText.textContent = slide.text || '';
-        slideLink.appendChild(spanText);
+    let currentIndex = 0;
 
-        const targetUrl = formatUrl(slide.link || slide.text_link);
-        if (targetUrl) {
-          slideLink.href = targetUrl;
-          slideLink.target = "_top";
-          slideLink.classList.add('is-clickable');
-          slideLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            try { window.top.location.href = targetUrl; } 
-            catch (err) { window.open(targetUrl, '_blank'); }
-          });
-        }
+    let slidesElements = [];
 
-        carousel.appendChild(slideLink);
-      });
 
-      slidesElements = document.querySelectorAll('.carousel-slide');
-    }
+    /***************************************************
+     * FORMATAGE DES URL
+     ***************************************************/
 
-    // Bouton GIF principal
-    const gifLink = document.getElementById('gif-button-link');
-    const gifImg = document.getElementById('gif-button-img');
+    function formatUrl(url) {
 
-    if (data.gif_button) {
-      gifImg.src = data.gif_button;
-      gifLink.style.display = 'inline-block';
-    }
-
-    const buttonUrl = formatUrl(data.button_link);
-    if (buttonUrl) {
-      gifLink.href = buttonUrl;
-      gifLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        try { window.top.location.href = buttonUrl; } 
-        catch (err) { window.open(buttonUrl, '_blank'); }
-      });
-    }
-  }
-
-  // ⚡ STRATÉGIE DE CACHE ULTRA RAPIDE :
-  // 1. Charger immédiatement depuis le LocalStorage si disponible (affichage instantané < 10ms)
-  const cachedData = localStorage.getItem('banner_config_cache');
-  if (cachedData) {
-    try {
-      renderCarousel(JSON.parse(cachedData));
-    } catch(e) { console.error(e); }
-  }
-
-  // 2. Mettre à jour les données en arrière-plan depuis Google Apps Script
-  fetch(SCRIPT_URL)
-    .then(response => response.json())
-    .then(data => {
-      // Sauvegarde en cache pour la prochaine visite
-      localStorage.setItem('banner_config_cache', JSON.stringify(data));
-      // Met à jour le carrousel si ce n'était pas encore affiché
-      if (!cachedData) {
-        renderCarousel(data);
+      if (
+        !url ||
+        typeof url !== 'string'
+      ) {
+        return '';
       }
-    })
-    .catch(err => console.error("Erreur de chargement distant :", err));
 
-  // 3. Défilement automatique
-  setInterval(() => {
-    if (slidesElements.length === 0) return;
-    slidesElements[currentIndex].classList.remove('active');
-    currentIndex = (currentIndex + 1) % slidesElements.length;
-    slidesElements[currentIndex].classList.add('active');
-  }, 4000);
-</script>
+
+      let cleanUrl =
+        url.trim();
+
+
+      if (!cleanUrl) {
+        return '';
+      }
+
+
+      if (
+        !cleanUrl.startsWith('http://') &&
+        !cleanUrl.startsWith('https://')
+      ) {
+
+        cleanUrl =
+          'https://' + cleanUrl;
+      }
+
+
+      return cleanUrl;
+    }
+
+
+    /***************************************************
+     * AFFICHAGE DU CARROUSEL
+     ***************************************************/
+
+    function renderCarousel(data) {
+
+      const carousel =
+        document.getElementById(
+          'carousel'
+        );
+
+
+      carousel.innerHTML = '';
+
+
+      /*************************************************
+       * SLIDES
+       *************************************************/
+
+      if (
+        data.slides &&
+        Array.isArray(data.slides)
+      ) {
+
+
+        data.slides.forEach(
+          (slide, index) => {
+
+
+            const slideLink =
+              document.createElement('a');
+
+
+            slideLink.className =
+              'carousel-slide ' +
+              (
+                index === 0
+                  ? 'active'
+                  : ''
+              );
+
+
+            slideLink.style.backgroundColor =
+              slide.color || '#333';
+
+
+            /*******************************************
+             * GIF
+             *******************************************/
+
+            if (
+              slide.gif &&
+              slide.gif.trim() !== ''
+            ) {
+
+              const img =
+                document.createElement('img');
+
+
+              img.src =
+                slide.gif.trim();
+
+
+              img.alt =
+                'Illustration';
+
+
+              img.className =
+                'slide-gif';
+
+
+              slideLink.appendChild(img);
+            }
+
+
+            /*******************************************
+             * TEXTE
+             *******************************************/
+
+            const spanText =
+              document.createElement('span');
+
+
+            spanText.className =
+              'slide-text';
+
+
+            spanText.textContent =
+              slide.text || '';
+
+
+            slideLink.appendChild(
+              spanText
+            );
+
+
+            /*******************************************
+             * LIEN
+             *******************************************/
+
+            const targetUrl =
+              formatUrl(
+                slide.link ||
+                slide.text_link
+              );
+
+
+            if (targetUrl) {
+
+              slideLink.href =
+                targetUrl;
+
+
+              slideLink.target =
+                '_top';
+
+
+              slideLink.classList.add(
+                'is-clickable'
+              );
+
+
+              slideLink.addEventListener(
+                'click',
+                (e) => {
+
+                  e.preventDefault();
+
+
+                  try {
+
+                    window.top.location.href =
+                      targetUrl;
+
+                  }
+                  catch (err) {
+
+                    window.open(
+                      targetUrl,
+                      '_blank'
+                    );
+
+                  }
+
+                }
+              );
+
+            }
+
+
+            carousel.appendChild(
+              slideLink
+            );
+
+          }
+        );
+
+
+        slidesElements =
+          document.querySelectorAll(
+            '.carousel-slide'
+          );
+
+      }
+
+
+      /*************************************************
+       * BOUTON GIF PRINCIPAL
+       *************************************************/
+
+      const gifLink =
+        document.getElementById(
+          'gif-button-link'
+        );
+
+
+      const gifImg =
+        document.getElementById(
+          'gif-button-img'
+        );
+
+
+      if (data.gif_button) {
+
+        gifImg.src =
+          data.gif_button;
+
+
+        gifLink.style.display =
+          'inline-block';
+
+      }
+
+
+      /*************************************************
+       * LIEN DU BOUTON
+       *************************************************/
+
+      const buttonUrl =
+        formatUrl(
+          data.button_link
+        );
+
+
+      if (buttonUrl) {
+
+        gifLink.href =
+          buttonUrl;
+
+
+        gifLink.addEventListener(
+          'click',
+          (e) => {
+
+            e.preventDefault();
+
+
+            try {
+
+              window.top.location.href =
+                buttonUrl;
+
+            }
+            catch (err) {
+
+              window.open(
+                buttonUrl,
+                '_blank'
+              );
+
+            }
+
+          }
+        );
+
+      }
+
+    }
+
+
+    /***************************************************
+     * AFFICHAGE INITIAL
+     ***************************************************/
+
+    renderCarousel(data);
+
+
+    /***************************************************
+     * DÉFILEMENT AUTOMATIQUE
+     ***************************************************/
+
+    setInterval(() => {
+
+      if (
+        slidesElements.length === 0
+      ) {
+        return;
+      }
+
+
+      slidesElements[
+        currentIndex
+      ].classList.remove(
+        'active'
+      );
+
+
+      currentIndex =
+        (
+          currentIndex + 1
+        ) %
+        slidesElements.length;
+
+
+      slidesElements[
+        currentIndex
+      ].classList.add(
+        'active'
+      );
+
+    }, 4000);
+
+
   </script>
 
+
 </body>
+
 </html>
