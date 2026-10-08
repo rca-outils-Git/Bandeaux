@@ -1,4 +1,3 @@
-  <script>
         // Attente du chargement complet du DOM
         document.addEventListener('DOMContentLoaded', () => {
             // Initialisation des icônes Lucide
@@ -124,4 +123,4 @@
             // Démarrer le carrousel
             startProgress();
         });
-    </script>
+
