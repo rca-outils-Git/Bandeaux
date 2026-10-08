@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-  <html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"
-    >
-    <title>Bandeau Carrousel avec Texte, GIF optionnel et Bouton</title>
-     <!-- Chargement de Tailwind CSS pour la mise en page responsive et épurée -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons pour des icônes élégantes -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style2.css">
-    <script src="script2.js"></script>
-  </head> 
-  <body>
-    <!-- Barre de progression -->
-    <div class="absolute top-0 left-0 right-0 h-1 bg-slate-800/50">
-      <div id="progress" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-violet-500 w-0"></div>
-    </div>
 
-    <!-- Indicateur "En pause" lors du survol -->
-    <div id="pause-badge" class="absolute top-4 right-4 text-xs font-medium text-slate-400 bg-slate-800/60 px-2.5 py-1 rounded-full opacity-0 transition-opacity duration-300 flex items-center gap-1.5 border border-slate-700/50">
-      <i data-lucide="pause" class="w-3 h-3 text-indigo-400"></i> Pause au survol
-    </div>
-   
+  <body>
+    <!-- Conteneur principal du Carrousel -->
+    <div id="carousel-container" class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden group">
+            
+      <!-- Barre de progression -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-slate-800/50">
+        <div id="progress" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-violet-500 w-0"></div>
+      </div>
+
+      <!-- Indicateur "En pause" lors du survol -->
+      <div id="pause-badge" class="absolute top-4 right-4 text-xs font-medium text-slate-400 bg-slate-800/60 px-2.5 py-1 rounded-full opacity-0 transition-opacity duration-300 flex items-center gap-1.5 border border-slate-700/50">
+        <i data-lucide="pause" class="w-3 h-3 text-indigo-400"></i> Pause au survol
+      </div>
+  
     <!-- Zone de contenu des textes (Diapositives) -->
     <div class="min-h-[220px] sm:min-h-[200px] flex items-center justify-center text-center px-2 my-4">
                 
@@ -50,6 +40,7 @@
       </div>
 
     </div>
+  </div>  
      
       <!-- Navigation et Puces -->
       <div class="flex items-center justify-between pt-6 border-t border-slate-800/80 mt-2">
