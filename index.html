@@ -3,164 +3,26 @@
 <html lang="fr">
 
 <head>
-
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
-
   <title>Bandeau Carrousel avec Texte, GIF optionnel et Bouton</title>
-
-
-  <style>
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-      font-family: Arial, sans-serif;
-    }
-
-
-    /* Structure principale (~2 cm de hauteur = 76px) */
-
-    .banner-container {
-      display: flex;
-      align-items: center;
-      height: 76px;
-      width: 100%;
-      background-color: #ffffff;
-      box-sizing: border-box;
-      padding: 8px 16px;
-      gap: 16px;
-    }
-
-
-    /* Conteneur du carrousel */
-
-    .carousel-wrapper {
-      flex: 1;
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-      border-radius: 8px;
-    }
-
-
-    /* Diapositives */
-
-    .carousel-slide {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 0 16px;
-
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 15px;
-      text-align: center;
-      text-decoration: none;
-
-      opacity: 0;
-      pointer-events: none;
-
-      transition:
-        opacity 0.5s ease-in-out;
-
-      z-index: 1;
-
-      box-sizing: border-box;
-    }
-
-
-    .carousel-slide.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-
-    .carousel-slide.is-clickable {
-      cursor: pointer !important;
-    }
-
-
-    .carousel-slide.is-clickable:hover {
-      opacity: 0.9;
-    }
-
-
-    .carousel-slide.is-clickable:hover .slide-text {
-      text-decoration: underline;
-    }
-
-
-    /* Image / GIF optionnel */
-
-    .slide-gif {
-      height: 48px;
-      width: auto;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-
-    /* Bouton GIF principal */
-
-    .btn-gif-link {
-      display: inline-block;
-      height: 100%;
-      cursor: pointer;
-      border-radius: 8px;
-      overflow: hidden;
-
-      transition:
-        transform 0.2s ease;
-
-      z-index: 3;
-    }
-
-
-    .btn-gif-link:hover {
-      transform: scale(1.04);
-    }
-
-
-    .btn-gif-link img {
-      display: block;
-      height: 100%;
-      width: auto;
-      object-fit: contain;
-    }
-
-  </style>
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
   <div class="banner-container">
-
-
     <!-- Zone Carrousel -->
-
     <div
-      class="carousel-wrapper"
-      id="carousel"
+      class="carousel-wrapper" id="carousel"
     ></div>
 
-
     <!-- Zone Bouton GIF principal -->
-
     <a
-      id="gif-button-link"
+      id="gif-button-link" 
       href="#"
       class="btn-gif-link"
       target="_top"
@@ -172,7 +34,6 @@
         src=""
         alt="Bouton d'action"
       >
-
     </a>
 
   </div>
@@ -180,18 +41,14 @@
 
   <script>
 
-
     /***************************************************
      * DONNÉES GÉNÉRÉES PAR GOOGLE APPS SCRIPT
      ***************************************************/
 
     const data = {"slides":[{"text":"randomania","color":"#dc2626","link":"https://sites.google.com/rando-ca.fr/randomania-2026/accueil","gif":""},{"text":"missions en cours rejoignez nos bénévoles","color":"#2563eb","link":"https://www.randocotedamour.fr/page/3983060-benevolat-rca","gif":"nouveau.gif"},{"text":"Troisième texte ","color":"#16a34a","link":"https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026","gif":""}],"gif_button":"","button_link":"https://www.randocotedamour.fr/page/3983060-benevolat-rca"};
-
-
     let currentIndex = 0;
 
     let slidesElements = [];
-
 
     /***************************************************
      * FORMATAGE DES URL
@@ -395,7 +252,6 @@
 
       }
 
-
       /*************************************************
        * BOUTON GIF PRINCIPAL
        *************************************************/
@@ -413,40 +269,20 @@
 
 
       if (data.gif_button) {
-
-        gifImg.src =
-          data.gif_button;
-
-
-        gifLink.style.display =
-          'inline-block';
-
+        gifImg.src = data.gif_button;
+        gifLink.style.display = 'inline-block';
       }
-
 
       /*************************************************
        * LIEN DU BOUTON
        *************************************************/
-
-      const buttonUrl =
-        formatUrl(
-          data.button_link
-        );
-
-
+      const buttonUrl = formatUrl(data.button_link);
       if (buttonUrl) {
-
-        gifLink.href =
-          buttonUrl;
-
-
+        gifLink.href = buttonUrl;
         gifLink.addEventListener(
           'click',
           (e) => {
-
             e.preventDefault();
-
-
             try {
 
               window.top.location.href =
@@ -473,9 +309,7 @@
     /***************************************************
      * AFFICHAGE INITIAL
      ***************************************************/
-
     renderCarousel(data);
-
 
     /***************************************************
      * DÉFILEMENT AUTOMATIQUE
