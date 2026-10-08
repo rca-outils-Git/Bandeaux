@@ -8,8 +8,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons pour des icônes élégantes -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style2.css">
-  
+    <script src="script2.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+        }
+
+        /* Animation des diapositives */
+        .carousel-slide {
+            opacity: 0;
+            transform: translateX(30px) scale(0.98);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        /* Effet de brillance et verre teinté pour la carte */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Barre de progression du défilement auto */
+        .progress-bar {
+            transition: width 0.1s linear;
+        }
+    </style>
 </head>
 <body class="min-h-screen text-slate-100 flex flex-col items-center justify-center p-4 sm:p-6 overflow-x-hidden">
 
@@ -110,9 +153,8 @@
 
         </div>
     </main>
-<script src="script2.js"></script>
-   
+
+    
 </body>
 </html>
 */
-
