@@ -6,6 +6,20 @@ body {
     background: transparent; /* Supprime le dégradé sombre */
 }
 
+/* Structure principale (~2 cm de hauteur = 76px) */
+.banner-container {
+  display: flex;
+  align-items: center;
+  height: 76px;
+  width: 100%;
+  background-color: #4287f5;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  gap: 16px;
+}
+
+
+
 /* Animation des diapositives sans transparence */
 .carousel-slide {
     display: none; /* Masque complètement la slide */
