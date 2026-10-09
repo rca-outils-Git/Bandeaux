@@ -35,10 +35,8 @@ body {
     display: flex; /* Affiche la slide active */
     pointer-events: auto;
     position: relative;
+    background-color: #4287f5;
 }
-       
-
-
 
         /* Animation des diapositives avec transparence
         .carousel-slide {
