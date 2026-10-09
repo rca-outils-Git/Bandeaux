@@ -5,7 +5,29 @@
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
         }
 
-        /* Animation des diapositives */
+       
+      
+/* Animation des diapositives sans transparence */
+.carousel-slide {
+    display: none; /* Masque complètement la slide */
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-slide.active {
+    display: flex; /* Affiche la slide active */
+    pointer-events: auto;
+    position: relative;
+}
+       
+
+
+
+        /* Animation des diapositives avec transparence
         .carousel-slide {
             opacity: 0;
             transform: translateX(30px) scale(0.98);
@@ -26,6 +48,7 @@
             pointer-events: auto;
             position: relative;
         }
+        */
 
         /* Effet de brillance et verre teinté pour la carte */
         .glass-card {
