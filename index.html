@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carrousel animé</title>
-  
-  <style>
+  <html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrousel animé</title>
+    <script src="script3.js"></script>
+    </head> 
+    <body>
+      <div class="carousel" id="carousel"> <style>
     * {
       margin: 0;
       padding: 0;
@@ -88,11 +90,6 @@
       flex-shrink: 0;
     }
 
-    /* Couleurs différentes par slide */
-    .slide-1 { background: #6c5ce7; }
-    .slide-2 { background: #e84393; }
-    .slide-3 { background: #0984e3; }
-    .slide-4 { background: #00b894; }
 
     /* --------------------------------------------------
        NAVIGATION ET BOUTONS
@@ -202,61 +199,26 @@
       }
     }
   </style>
-</head>
-
-<body>
-
-  <div class="carousel" id="carousel">
-
-    <!-- SLIDE 1 -->
-    <section class="slide slide-1 active">
-      <img
-        src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif"
-        alt="Animation de célébration"
-      >
-      <p>
-        Découvre notre univers à travers ce carrousel interactif.
-        Fais défiler les slides pour continuer !
-      </p>
-    </section>
-
-    <!-- SLIDE 2 -->
-    <section class="slide slide-2">
-      <img
-        src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-        alt="Animation créative"
-        loading="lazy"
-      >
-      <p>
-        Ajoute tes idées, raconte ton histoire et utilise
-        des animations pour attirer l'attention.
-      </p>
-    </section>
-
-    <!-- SLIDE 3 -->
-    <section class="slide slide-3">
-      <img
-        src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif"
-        alt="Animation de réussite"
-        loading="lazy"
-      >
-      <p>
-        Un message clair et un visuel animé peuvent rendre
-        ton contenu plus vivant et plus mémorable.
-      </p>
-    </section>
-
-    <!-- SLIDE 4 -->
-    <section class="slide slide-4">
-      <img
-        src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif"
-        alt="Animation festive"
-        loading="lazy"
-      >
-      <h3>🎉 À toi de jouer !</h3>
-    </section>
-
-    <!-- Navigation et Puces -->
+    
+        <!-- Annonce 0 -->
+        <section class="slide active" style="background-color: bg-indigo-950/40;">
+          <img src="image1.gif" alt="Célébration">
+          <p><a href="https://sites.google.com/rando-ca.fr/randomania-2026/accueil" target="_blank" class="hover:underline text-white">randomania</a></p>
+        </section>
+          
+        <!-- Annonce 1 -->
+        <section class="slide" style="background-color: bg-purple-950/40;">
+          <img src="image1.gif" alt="Célébration">
+          <p><a href="https://www.randocotedamour.fr/page/3983060-benevolat-rca" target="_blank" class="hover:underline text-white">missions en cours rejoignez nos bénévoles</a></p>
+        </section>
+          
+        <!-- Annonce 2 -->
+        <section class="slide" style="background-color: bg-emerald-950/40;">
+          <img src="image1.gif" alt="Célébration">
+          <p><a href="https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026" target="_blank" class="hover:underline text-white">Troisième texte </a></p>
+        </section>
+        
+     <!-- Navigation et Puces -->
     <div class="carousel-nav">
       
       <!-- Bouton Précédent -->
@@ -284,8 +246,7 @@
     </div> 
 
   </div>
-
-  <script>
+   <script>
     const slides = document.querySelectorAll(".slide");
     const dots = document.querySelectorAll(".dot");
     const prevBtn = document.getElementById("prevBtn");
@@ -334,6 +295,6 @@
       }
     });
   </script>
-
-</body>
-</html>
+    
+    </body>
+  </html>
