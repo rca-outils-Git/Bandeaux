@@ -1,75 +1,366 @@
 <!DOCTYPE html>
-  <html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"
-    >
-    <title>Bandeau Carrousel avec Texte, GIF optionnel et Bouton</title>
-     <!-- Chargement de Tailwind CSS pour la mise en page responsive et épurée -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons pour des icônes élégantes -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style2.css">
-    <script src="script2.js"></script>
-  </head> 
-  <body class="bg-gray-300">
-    <!-- Conteneur principal du Carrousel -->
-    <div id="carousel-container">
-            
-      <!-- Barre de progression -->
-      <div class="absolute top-0 left-0 right-0 h-1 bg-slate-800/50">
-        <div id="progress" class="progress-bar h-full bg-gradient-to-r from-indigo-500 to-violet-500 w-0"></div>
-      </div>
-      
-      <!-- Zone de contenu des textes (Diapositives) -->
-      <div class="min-h-[40px] sm:min-h-[40px] flex items-center justify-center text-center my-1">
-    
-        <!-- Annonce -->
-        <div class="carousel-slide active w-full bg-indigo-950/40 py-6" data-index="0">
-          <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-black leading-relaxed max-w-xl mx-auto">
-            <a href="https://sites.google.com/rando-ca.fr/randomania-2026/accueil" target="_blank" class="hover:underline text-white">randomania</a>
-          </blockquote> 
-        </div>  
-          
-        <!-- Annonce -->
-        <div class="carousel-slide w-full bg-purple-950/40 py-6" data-index="1">
-          <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-black leading-relaxed max-w-xl mx-auto">
-            <a href="https://www.randocotedamour.fr/page/3983060-benevolat-rca" target="_blank" class="hover:underline text-white">missions en cours rejoignez nos bénévoles</a>
-          </blockquote> 
-        </div>  
-          
-        <!-- Annonce -->
-        <div class="carousel-slide w-full bg-emerald-950/40 py-6" data-index="2">
-          <blockquote class="text-lg sm:text-xl md:text-2xl font-medium text-black leading-relaxed max-w-xl mx-auto">
-            <a href="https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026" target="_blank" class="hover:underline text-white">Troisième texte </a>
-          </blockquote> 
-        </div>  
-        
-      </div>
-      <!-- Navigation et Puces -->
-      <div class="bg-green flex items-center justify-between pt-1 border-t border-slate-800/80 mt-1">
-        
-        <!-- Bouton Précédent -->
-        <button id="prev-btn" aria-label="Diapositive précédente" class="p-1 rounded-xl bg-slate-800/50 hover:bg-slate-700/60 text-slate-300 hover:text-white transition-all duration-200 border border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 active:scale-95">
-            <i data-lucide="chevron-left" class="w-3 h-3"></i>
-        </button>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrousel animé</title>
 
-        <!-- Indicateurs / Points (Dots) -->
-        <div class="flex items-center space-x-2.5" id="dots-container">
-            <button class="dot w-8 h-2 rounded-full bg-indigo-500 transition-all duration-300" aria-label="Aller au texte 1" data-index="0"></button>
-            <button class="dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300" aria-label="Aller au texte 2" data-index="1"></button>
-            <button class="dot w-2 h-2 rounded-full bg-slate-700 hover:bg-slate-500 transition-all duration-300" aria-label="Aller au texte 3" data-index="2"></button>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+  
+
+    body {
+      min-height: 100vh;     /* S'assure que le corps prend au moins toute la hauteur de l'écran */
+      display: flex;         /* Utilise Flexbox pour la mise en page générale */
+      justify-content: center; /* Centre le contenu horizontalement */
+      align-items: center;   /* Centre le contenu verticalement */
+      padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
+      font-family: Arial, sans-serif; /* Police d'écriture principale */
+      background: #f3f4f6;   /* Couleur de fond de la page (gris très clair) */
+    }
+
+  
+    /* --------------------------------------------------
+       2. CONTENEUR PRINCIPAL DU CARROUSEL
+       -------------------------------------------------- */
+    .carousel {
+      width: 100%;           /* Occupe toute la largeur disponible */
+      max-width: 700px;      /* Limite la largeur maximale à 700px */
+      overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
+      border-radius: 24px;   /* Arrondit les angles du carrousel */
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce pour un effet d'élévation */
+    }
+    /* --------------------------------------------------
+       3. STYLES DES DIAPOSITIVES (Slides)
+       -------------------------------------------------- */
+    .slide {
+      display: none;          /* Masque les diapositives par défaut */
+      min-height: 50px;      /* Hauteur minimale de chaque slide */
+      padding: 10px 10px;     /* Espacement interne (haut/bas 45px, gauche/droite 30px) */
+      color: white;           /* Couleur du texte en blanc */
+      text-align: center;     /* Centre le texte */
+      flex-direction: row; /* Aligne les éléments enfants horizontalment */
+      align-items: center;   /* Centre les enfants horizontalement */
+      justify-content: center;/* Centre les enfants verticalement */
+      gap: 22px;              /* Espace vertical entre chaque élément de la slide */
+      animation: fadeIn 0.4s ease; /* Applique l'animation d'apparition fluide */
+    }
+
+
+
+    .slide.active {
+      display: flex;
+    }
+
+   /* Titres dans les slides */
+    .slide h2 {
+      font-size: clamp(26px, 5vw, 38px); /* Taille adaptative : min 26px, idéal 5vw, max 38px */
+      line-height: 1.2;       /* Hauteur de ligne resserrée pour les titres */
+    }
+
+  /* Paragraphes dans les slides */
+    .slide p {
+      max-width: 480px;       /* Limite la largeur du texte pour améliorer la lisibilité */
+      font-size: 17px;        /* Taille de la police */
+      line-height: 1.7;       /* Espacement aéré entre les lignes de texte */
+    }
+
+    /* Images intégrées dans les slides */
+    .slide img {
+      width: 100%;            /* S'adapte à la largeur du conteneur */
+      max-width: 80px;        /* Largeur maximale de l'image */
+      height: 45px;           /* Hauteur fixe de l'image */
+      object-fit: cover;      /* Conserve le ratio de l'image sans la déformer */
+      border-radius: 16px;    /* Arrondit les coins de l'image */
+      background: rgba(255,255,255,0.15); /* Fond blanc semi-transparent en attendant le chargement */
+    }
+
+    /* Couleurs différentes par slide */
+    .slide-1 { background: #6c5ce7; }
+    .slide-2 { background: #e84393; }
+    .slide-3 { background: #0984e3; }
+    .slide-4 { background: #00b894; }
+
+    /* --------------------------------------------------
+       4. PIED DE PAGE ET BARRE DE PROGRESSION
+       -------------------------------------------------- */
+    .carousel-footer {
+      background: white;     /* Fond blanc pour la zone de contrôle */
+      padding: 10px 14px;    /* Espacement interne du footer */
+    }
+
+    /* Piste grise de la barre de progression */
+    .progress-track {
+      width: 100%;
+      height: 6px;           /* Epaisseur de la barre */
+      background: #e5e7eb;   /* Couleur de fond (gris clair) */
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 8px;   /* Espace sous la barre de progression */
+    }
+
+    /* Indicateur de progression (partie remplie) */
+    .progress-bar {
+      width: 25%;            /* Valeur initiale (par ex. 1/4 du carrousel) */
+      height: 100%;
+      background: #6c5ce7;   /* Couleur de remplissage */
+      border-radius: 10px;
+      transition: width 0.35s ease; /* Animation fluide lors du changement de largeur */
+    }
+
+   /* --------------------------------------------------
+       5. CONTROLES ET BOUTONS
+       -------------------------------------------------- */
+    .controls {
+      display: flex;
+      justify-content: space-between; /* Espace le compteur à gauche et les boutons à droite */
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Compteur de diapositives (ex: "1 / 4") */
+    .counter {
+      color: #374151;        /* Couleur du texte (gris foncé) */
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;   /* Empêche le retour à la ligne */
+    }
+
+    /* Groupe de boutons */
+    .buttons {
+      display: flex;
+      gap: 10px;             /* Espace entre le bouton précédent et suivant */
+    }
+
+    /* Styles de base pour tous les boutons */
+    button {
+      border: none;           /* Supprime la bordure par défaut */
+      border-radius: 10px;    /* Arrondit les coins du bouton */
+      padding: 6px 9px;     /* Taille du bouton (haut/bas, gauche/droite) */
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;        /* Curseur en forme de main au survol */
+      transition: transform 0.2s, opacity 0.2s; /* Transitions fluides pour les interactions */
+    }
+
+    /* Effet au survol du bouton */
+    button:hover {
+      transform: translateY(-2px); /* Lève légèrement le bouton de 2px */
+    }
+
+    /* État désactivé du bouton (ex: premier ou dernier slide) */
+    button:disabled {
+      opacity: 0.35;         /* Rend le bouton semi-transparent */
+      cursor: not-allowed;   /* Modifie le curseur pour indiquer que l'action est impossible */
+      transform: none;       /* Annule l'effet de survol */
+    }
+
+    /* Bouton "Précédent" */
+    .btn-prev {
+      background: #e5e7eb;   /* Fond gris clair */
+      color: #111827;        /* Texte sombre */
+    }
+
+    /* Bouton "Suivant" */
+    .btn-next {
+      background: #6c5ce7;   /* Fond violet */
+      color: white;          /* Texte blanc */
+    }
+ /* --------------------------------------------------
+       6. ANIMATIONS
+       -------------------------------------------------- */
+    /* Animation d'apparition progressive de haut en bas */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;                   /* Transparence totale au début */
+        transform: translateY(8px);   /* Décalé de 8px vers le bas */
+      }
+      to {
+        opacity: 1;                   /* Totalement opaque à la fin */
+        transform: translateY(0);     /* Reprend sa position d'origine */
+      }
+    }
+
+   /* --------------------------------------------------
+       7. DESIGN RESPONSIVE (Mobiles)
+       -------------------------------------------------- */
+    @media (max-width: 480px) {
+      .slide {
+        min-height: 420px;  /* Augmente la hauteur minimale sur mobile pour laisser de la place au contenu */
+        padding: 30px 20px; /* Réduit le padding sur petit écran */
+      }
+
+      .slide img {
+        height: 160px;     /* Agrandit l'image sur écran mobile */
+      }
+
+      .carousel-footer {
+        padding: 16px;      /* Espace réduit dans le footer */
+      }
+
+      button {
+        padding: 11px 13px; /* Boutons légèrement plus compacts */
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="carousel" id="carousel">
+
+    <!-- SLIDE 1 -->
+    <section class="slide slide-1 active">
+      <img
+        src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif"
+        alt="Animation de célébration"
+      >
+      <p>
+        Découvre notre univers à travers ce carrousel interactif.
+        Fais défiler les slides pour continuer !
+      </p>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide slide-2">
+      <img
+        src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+        alt="Animation créative"
+        loading="lazy"
+      >
+      <p>
+        Ajoute tes idées, raconte ton histoire et utilise
+        des animations pour attirer l'attention.
+      </p>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide slide-3">
+      <img
+        src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif"
+        alt="Animation de réussite"
+        loading="lazy"
+      >
+      <p>
+        Un message clair et un visuel animé peuvent rendre
+        ton contenu plus vivant et plus mémorable.
+      </p>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide slide-4">
+      <img
+        src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif"
+        alt="Animation festive"
+        loading="lazy"
+      >
+       <h3>🎉 À toi de jouer !</h2>
+     
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="carousel-footer">
+
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="Progression du carrousel"
+        aria-valuemin="1"
+        aria-valuemax="4"
+        aria-valuenow="1"
+        id="progressTrack"
+      >
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="controls">
+        <span class="counter" id="counter" aria-live="polite">
+          1 / 4
+        </span>
+
+        <div class="buttons">
+          <button
+            class="btn-prev"
+            id="prevBtn"
+            onclick="changeSlide(-1)"
+            disabled
+          >
+            ← Précédent
+          </button>
+
+          <button
+            class="btn-next"
+            id="nextBtn"
+            onclick="changeSlide(1)"
+          >
+            Suivant →
+          </button>
         </div>
-
-        <!-- Bouton Suivant -->
-        <button id="next-btn" aria-label="Diapositive suivante" class="p-1 rounded-xl bg-slate-800/50 hover:bg-slate-700/60 text-slate-300 hover:text-white transition-all duration-200 border border-slate-700/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 active:scale-95">
-            <i data-lucide="chevron-right" class="w-3 h-3"></i>
-        </button>
-
       </div>
 
     </div>
-  </main>  
-  </body>
+  </div>
 
+  <script>
+    const slides = document.querySelectorAll(".slide");
+    const progressBar = document.getElementById("progressBar");
+    const counter = document.getElementById("counter");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressTrack = document.getElementById("progressTrack");
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function changeSlide(direction) {
+      currentSlide += direction;
+
+      // Empêche de dépasser les limites
+      currentSlide = Math.max(
+        0,
+        Math.min(currentSlide, totalSlides - 1)
+      );
+
+      // Affiche la bonne slide
+      slides.forEach((slide, index) => {
+        slide.classList.toggle("active", index === currentSlide);
+      });
+
+      // Met à jour le compteur
+      counter.textContent =
+        `${currentSlide + 1} / ${totalSlides}`;
+
+      // Met à jour la progression
+      const progress =
+        ((currentSlide + 1) / totalSlides) * 100;
+
+      progressBar.style.width = `${progress}%`;
+      progressTrack.setAttribute(
+        "aria-valuenow",
+        currentSlide + 1
+      );
+
+      // Active ou désactive les boutons
+      prevBtn.disabled = currentSlide === 0;
+      nextBtn.disabled = currentSlide === totalSlides - 1;
+    }
+
+    // Navigation avec les flèches du clavier
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" && currentSlide < totalSlides - 1) {
+        changeSlide(1);
+      }
+
+      if (event.key === "ArrowLeft" && currentSlide > 0) {
+        changeSlide(-1);
+      }
+    });
+  </script>
+
+</body>
 </html>
