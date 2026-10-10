@@ -4,18 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrousel animé</title>
-
+  
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-  
-
+    
     body {
-      min-height: 100vh;     /* S'assure que le corps prend au moins toute la hauteur de l'écran */
+      display: flex;         /* Utilise Flexbox pour la mise en page générale */
+      justify-content: center; /* Centre le contenu horizontalement */
+      align-items: center;   /* Centre le contenu verticalement */
+      padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
+      font-family: Arial, sans-serif; /* Police d'écriture principale */
+      background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
+    }
+
+    body-xx {
+      min-height: 100vh;
       display: flex;         /* Utilise Flexbox pour la mise en page générale */
       justify-content: center; /* Centre le contenu horizontalement */
       align-items: center;   /* Centre le contenu verticalement */
@@ -24,60 +31,61 @@
       background: #f3f4f6;   /* Couleur de fond de la page (gris très clair) */
     }
 
-  
     /* --------------------------------------------------
-       2. CONTENEUR PRINCIPAL DU CARROUSEL
+       CONTENEUR PRINCIPAL DU CARROUSEL
        -------------------------------------------------- */
     .carousel {
       width: 100%;           /* Occupe toute la largeur disponible */
-      max-width: 700px;      /* Limite la largeur maximale à 700px */
+      max-width: 1100px;      /* Limite la largeur maximale à 900px */
       overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
       border-radius: 24px;   /* Arrondit les angles du carrousel */
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce pour un effet d'élévation */
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
+      background: #ffffff;
+      padding-bottom: 2px;
     }
+
     /* --------------------------------------------------
-       3. STYLES DES DIAPOSITIVES (Slides)
+       STYLES DES DIAPOSITIVES (Slides)
        -------------------------------------------------- */
     .slide {
       display: none;          /* Masque les diapositives par défaut */
-      min-height: 50px;      /* Hauteur minimale de chaque slide */
-      padding: 10px 10px;     /* Espacement interne (haut/bas 45px, gauche/droite 30px) */
+      min-height: 80px;      /* Hauteur minimale de chaque slide */
+      padding: 2px;          /* Espacement interne */
       color: white;           /* Couleur du texte en blanc */
       text-align: center;     /* Centre le texte */
-      flex-direction: row; /* Aligne les éléments enfants horizontalment */
-      align-items: center;   /* Centre les enfants horizontalement */
-      justify-content: center;/* Centre les enfants verticalement */
-      gap: 22px;              /* Espace vertical entre chaque élément de la slide */
-      animation: fadeIn 0.4s ease; /* Applique l'animation d'apparition fluide */
+      flex-direction: row;    /* Aligne les éléments enfants horizontalement */
+      align-items: center;    /* Centre les enfants verticalement */
+      justify-content: center;/* Centre les enfants horizontalement */
+      gap: 15px;              /* Espace entre chaque élément */
+      animation: fadeIn 0.4s ease; /* Animation d'apparition fluide */
     }
-
-
 
     .slide.active {
       display: flex;
     }
 
-   /* Titres dans les slides */
-    .slide h2 {
-      font-size: clamp(26px, 5vw, 38px); /* Taille adaptative : min 26px, idéal 5vw, max 38px */
-      line-height: 1.2;       /* Hauteur de ligne resserrée pour les titres */
+    /* Titres dans les slides */
+    .slide h2, .slide h3 {
+      font-size: clamp(22px, 4vw, 32px);
+      line-height: 1.2;
     }
 
-  /* Paragraphes dans les slides */
+    /* Paragraphes dans les slides */
     .slide p {
-      max-width: 480px;       /* Limite la largeur du texte pour améliorer la lisibilité */
-      font-size: 17px;        /* Taille de la police */
-      line-height: 1.7;       /* Espacement aéré entre les lignes de texte */
+      max-width: 480px;       /* Limite la largeur du texte pour la lisibilité */
+      font-size: 16px;
+      line-height: 1.6;
     }
 
     /* Images intégrées dans les slides */
     .slide img {
-      width: 100%;            /* S'adapte à la largeur du conteneur */
-      max-width: 80px;        /* Largeur maximale de l'image */
-      height: 45px;           /* Hauteur fixe de l'image */
+      width: 100%;
+      max-width: 100px;       /* Largeur maximale de l'image */
+      height: 50px;           /* Hauteur fixe de l'image */
       object-fit: cover;      /* Conserve le ratio de l'image sans la déformer */
-      border-radius: 16px;    /* Arrondit les coins de l'image */
-      background: rgba(255,255,255,0.15); /* Fond blanc semi-transparent en attendant le chargement */
+      border-radius: 12px;    /* Arrondit les coins de l'image */
+      background: rgba(255,255,255,0.15);
+      flex-shrink: 0;
     }
 
     /* Couleurs différentes par slide */
@@ -87,124 +95,110 @@
     .slide-4 { background: #00b894; }
 
     /* --------------------------------------------------
-       4. PIED DE PAGE ET BARRE DE PROGRESSION
+       NAVIGATION ET BOUTONS
        -------------------------------------------------- */
-    .carousel-footer {
-      background: white;     /* Fond blanc pour la zone de contrôle */
-      padding: 10px 14px;    /* Espacement interne du footer */
-    }
-
-    /* Piste grise de la barre de progression */
-    .progress-track {
-      width: 100%;
-      height: 6px;           /* Epaisseur de la barre */
-      background: #e5e7eb;   /* Couleur de fond (gris clair) */
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 8px;   /* Espace sous la barre de progression */
-    }
-
-    /* Indicateur de progression (partie remplie) */
-    .progress-bar {
-      width: 25%;            /* Valeur initiale (par ex. 1/4 du carrousel) */
-      height: 100%;
-      background: #6c5ce7;   /* Couleur de remplissage */
-      border-radius: 10px;
-      transition: width 0.35s ease; /* Animation fluide lors du changement de largeur */
-    }
-
-   /* --------------------------------------------------
-       5. CONTROLES ET BOUTONS
-       -------------------------------------------------- */
-    .controls {
+    .carousel-nav {
       display: flex;
-      justify-content: space-between; /* Espace le compteur à gauche et les boutons à droite */
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+      padding-top: 2px;
+      margin-top: 4px;
+      padding-left: 24px; 
+      padding-right: 24px;
     }
 
-    /* Compteur de diapositives (ex: "1 / 4") */
-    .counter {
-      color: #374151;        /* Couleur du texte (gris foncé) */
-      font-size: 14px;
-      font-weight: bold;
-      white-space: nowrap;   /* Empêche le retour à la ligne */
+    /* Boutons de navigation (Précédent / Suivant) */
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+      border-radius: 8px;
+      background-color: rgba(30, 41, 59, 0.8); /* slate-800 */
+      color: #cbd5e1; /* slate-300 */
+      border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700/50 */
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    /* Groupe de boutons */
-    .buttons {
+    .btn-nav:hover:not(:disabled) {
+      background-color: rgba(51, 65, 85, 1);
+      color: #ffffff;
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-nav:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+    }
+
+    .btn-nav:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    /* Taille des icônes SVG */
+    .btn-nav .icon {
+      width: 16px;
+      height: 12px;
+    }
+
+    /* Conteneur des puces (Dots) */
+    .dots-container {
       display: flex;
-      gap: 10px;             /* Espace entre le bouton précédent et suivant */
+      align-items: center;
+      gap: 10px;                /* espacement des puces 
     }
 
-    /* Styles de base pour tous les boutons */
-    button {
-      border: none;           /* Supprime la bordure par défaut */
-      border-radius: 10px;    /* Arrondit les coins du bouton */
-      padding: 6px 9px;     /* Taille du bouton (haut/bas, gauche/droite) */
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;        /* Curseur en forme de main au survol */
-      transition: transform 0.2s, opacity 0.2s; /* Transitions fluides pour les interactions */
+    /* Puces de navigation */
+    .dot {
+      width: 8px;
+      height: 8px;
+      border: none;
+      border-radius: 9999px;
+      background-color: #cbd5e1; /* slate-300 */
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
     }
 
-    /* Effet au survol du bouton */
-    button:hover {
-      transform: translateY(-2px); /* Lève légèrement le bouton de 2px */
+    .dot:hover {
+      background-color: #64748b; /* slate-500 */
     }
 
-    /* État désactivé du bouton (ex: premier ou dernier slide) */
-    button:disabled {
-      opacity: 0.35;         /* Rend le bouton semi-transparent */
-      cursor: not-allowed;   /* Modifie le curseur pour indiquer que l'action est impossible */
-      transform: none;       /* Annule l'effet de survol */
+    /* Puce active */
+    .dot.active {
+      width: 32px;
+      background-color: #6366f1; /* indigo-500 */
     }
 
-    /* Bouton "Précédent" */
-    .btn-prev {
-      background: #e5e7eb;   /* Fond gris clair */
-      color: #111827;        /* Texte sombre */
-    }
-
-    /* Bouton "Suivant" */
-    .btn-next {
-      background: #6c5ce7;   /* Fond violet */
-      color: white;          /* Texte blanc */
-    }
- /* --------------------------------------------------
-       6. ANIMATIONS
+    /* --------------------------------------------------
+       ANIMATIONS & RESPONSIVE
        -------------------------------------------------- */
-    /* Animation d'apparition progressive de haut en bas */
     @keyframes fadeIn {
       from {
-        opacity: 0;                   /* Transparence totale au début */
-        transform: translateY(8px);   /* Décalé de 8px vers le bas */
+        opacity: 0;
+        transform: translateY(8px);
       }
       to {
-        opacity: 1;                   /* Totalement opaque à la fin */
-        transform: translateY(0);     /* Reprend sa position d'origine */
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-   /* --------------------------------------------------
-       7. DESIGN RESPONSIVE (Mobiles)
-       -------------------------------------------------- */
     @media (max-width: 480px) {
       .slide {
-        min-height: 420px;  /* Augmente la hauteur minimale sur mobile pour laisser de la place au contenu */
-        padding: 30px 20px; /* Réduit le padding sur petit écran */
+        flex-direction: column;
+        min-height: 220px;
+        padding: 12px 8px;
       }
 
       .slide img {
-        height: 160px;     /* Agrandit l'image sur écran mobile */
-      }
-
-      .carousel-footer {
-        padding: 16px;      /* Espace réduit dans le footer */
-      }
-
-      button {
-        padding: 11px 13px; /* Boutons légèrement plus compacts */
+        height: 80px;
+        max-width: 120px;
       }
     }
   </style>
@@ -259,105 +253,84 @@
         alt="Animation festive"
         loading="lazy"
       >
-       <h3>🎉 À toi de jouer !</h2>
-     
+      <h3>🎉 À toi de jouer !</h3>
     </section>
 
-    <!-- NAVIGATION -->
-    <div class="carousel-footer">
+    <!-- Navigation et Puces -->
+    <div class="carousel-nav">
+      
+      <!-- Bouton Précédent -->
+      <button id="prevBtn" aria-label="Diapositive précédente" class="btn-nav" disabled>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
 
-      <div
-        class="progress-track"
-        role="progressbar"
-        aria-label="Progression du carrousel"
-        aria-valuemin="1"
-        aria-valuemax="4"
-        aria-valuenow="1"
-        id="progressTrack"
-      >
-        <div class="progress-bar" id="progressBar"></div>
+      <!-- Indicateurs / Points (Dots) -->
+      <div class="dots-container" id="dots-container">
+        <button class="dot active" aria-label="Aller à la slide 1" data-index="0"></button>
+        <button class="dot" aria-label="Aller à la slide 2" data-index="1"></button>
+        <button class="dot" aria-label="Aller à la slide 3" data-index="2"></button>
+        <button class="dot" aria-label="Aller à la slide 4" data-index="3"></button>
       </div>
 
-      <div class="controls">
-        <span class="counter" id="counter" aria-live="polite">
-          1 / 4
-        </span>
+      <!-- Bouton Suivant -->
+      <button id="nextBtn" aria-label="Diapositive suivante" class="btn-nav">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
 
-        <div class="buttons">
-          <button
-            class="btn-prev"
-            id="prevBtn"
-            onclick="changeSlide(-1)"
-            disabled
-          >
-            ← Précédent
-          </button>
+    </div> 
 
-          <button
-            class="btn-next"
-            id="nextBtn"
-            onclick="changeSlide(1)"
-          >
-            Suivant →
-          </button>
-        </div>
-      </div>
-
-    </div>
   </div>
 
   <script>
     const slides = document.querySelectorAll(".slide");
-    const progressBar = document.getElementById("progressBar");
-    const counter = document.getElementById("counter");
+    const dots = document.querySelectorAll(".dot");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
-    const progressTrack = document.getElementById("progressTrack");
 
     let currentSlide = 0;
     const totalSlides = slides.length;
 
-    function changeSlide(direction) {
-      currentSlide += direction;
+    function goToSlide(index) {
+      // Borne le numéro de slide
+      currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
 
-      // Empêche de dépasser les limites
-      currentSlide = Math.max(
-        0,
-        Math.min(currentSlide, totalSlides - 1)
-      );
-
-      // Affiche la bonne slide
-      slides.forEach((slide, index) => {
-        slide.classList.toggle("active", index === currentSlide);
+      // Met à jour l'affichage des slides
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === currentSlide);
       });
 
-      // Met à jour le compteur
-      counter.textContent =
-        `${currentSlide + 1} / ${totalSlides}`;
+      // Met à jour l'état des puces (dots)
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentSlide);
+      });
 
-      // Met à jour la progression
-      const progress =
-        ((currentSlide + 1) / totalSlides) * 100;
-
-      progressBar.style.width = `${progress}%`;
-      progressTrack.setAttribute(
-        "aria-valuenow",
-        currentSlide + 1
-      );
-
-      // Active ou désactive les boutons
-      prevBtn.disabled = currentSlide === 0;
-      nextBtn.disabled = currentSlide === totalSlides - 1;
+      // Met à jour les boutons (désactivation aux extrémités)
+      prevBtn.disabled = (currentSlide === 0);
+      nextBtn.disabled = (currentSlide === totalSlides - 1);
     }
 
-    // Navigation avec les flèches du clavier
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowRight" && currentSlide < totalSlides - 1) {
-        changeSlide(1);
-      }
+    // Événements sur les boutons Précédent / Suivant
+    prevBtn.addEventListener("click", () => goToSlide(currentSlide - 1));
+    nextBtn.addEventListener("click", () => goToSlide(currentSlide + 1));
 
-      if (event.key === "ArrowLeft" && currentSlide > 0) {
-        changeSlide(-1);
+    // Événement clic sur les puces (dots)
+    dots.forEach((dot) => {
+      dot.addEventListener("click", (e) => {
+        const index = parseInt(e.target.getAttribute("data-index"), 10);
+        goToSlide(index);
+      });
+    });
+
+    // Navigation au clavier avec les flèches directionnelles
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight") {
+        goToSlide(currentSlide + 1);
+      } else if (event.key === "ArrowLeft") {
+        goToSlide(currentSlide - 1);
       }
     });
   </script>
