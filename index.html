@@ -90,6 +90,17 @@
       flex-shrink: 0;
     }
 
+    /* Style par défaut (text-white) */
+    .mon-lien {
+      color: #ffffff;
+      text-decoration: none; /* Pas de soulignement au départ */
+    }
+
+    /* Style au survol (hover:underline) */
+    .mon-lien:hover {
+      text-decoration: underline;
+    }
+
 
     /* --------------------------------------------------
        NAVIGATION ET BOUTONS
@@ -201,24 +212,24 @@
   </style>
   
   </head>
-    <body>
+  <body>
     <div class="carousel" id="carousel">  
         <!-- Annonce 0 -->
         <section class="slide active" style="background-color: #6c5ce7;">
           <img src="image1.gif" alt="Célébration">
-          <p><a href="https://sites.google.com/rando-ca.fr/randomania-2026/accueil" target="_blank" class="hover:underline text-white">randomania</a></p>
+          <p>randomania</p>
         </section>
           
         <!-- Annonce 1 -->
         <section class="slide" style="background-color: deeppink;">
           <img src="image1.gif" alt="Célébration">
-          <p><a href="https://www.randocotedamour.fr/page/3983060-benevolat-rca" target="_blank" class="hover:underline text-white">missions en cours rejoignez nos bénévoles</a></p>
+          <p> <a href="https://www.randocotedamour.fr/page/3983060-benevolat-rca" target="_blank" class="mon-lien">missions en cours rejoignez nos bénévoles</a></p>
         </section>
           
         <!-- Annonce 2 -->
         <section class="slide" style="background-color: rgb(9, 132, 227);">
           <img src="image1.gif" alt="Célébration">
-          <p><a href="https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026" target="_blank" class="hover:underline text-white">Troisième texte </a></p>
+          <p> <a href="https://www.randocotedamour.fr/collect/choice/561323-q-randomania-2026" target="_blank" class="mon-lien">Troisième texte </a></p>
         </section>
         
      <!-- Navigation et Puces -->
