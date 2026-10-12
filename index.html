@@ -57,13 +57,17 @@
     const dots = document.querySelectorAll(".dot");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
+    const carouselContainer = document.getElementById("carousel-container");
+
 
     let currentSlide = 0;
     const totalSlides = slides.length;
+    let autoPlayInterval;
+    const slideDuration = 4000; // Durée d'affichage de chaque slide en millisecondes (4 secondes)
 
     function goToSlide(index) {
-      // Borne le numéro de slide
-      currentSlide = Math.max(0, Math.min(index, totalSlides - 1));
+      // Boucle infinie (revient au début si on dépasse la fin, ou va à la fin si on recule depuis le début)
+      currentSlide = (index + totalSlides) % totalSlides;
 
       // Met à jour l'affichage des slides
       slides.forEach((slide, i) => {
@@ -74,23 +78,56 @@
       dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === currentSlide);
       });
+    }
+    
+    // Fonctions de navigation
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
 
-      // Met à jour les boutons (désactivation aux extrémités)
-      prevBtn.disabled = (currentSlide === 0);
-      nextBtn.disabled = (currentSlide === totalSlides - 1);
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    // Démarrage du défilement automatique
+    function startAutoPlay() {
+      autoPlayInterval = setInterval(nextSlide, slideDuration);
+    }
+
+    // Arrêt du défilement automatique (lors du survol)
+    function stopAutoPlay() {
+      clearInterval(autoPlayInterval);
     }
 
     // Événements sur les boutons Précédent / Suivant
-    prevBtn.addEventListener("click", () => goToSlide(currentSlide - 1));
-    nextBtn.addEventListener("click", () => goToSlide(currentSlide + 1));
+    prevBtn.addEventListener("click", () => {
+      prevSlide();
+      resetAutoPlay();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      nextSlide();
+      resetAutoPlay();
+    });
 
     // Événement clic sur les puces (dots)
     dots.forEach((dot) => {
       dot.addEventListener("click", (e) => {
         const index = parseInt(e.target.getAttribute("data-index"), 10);
         goToSlide(index);
+        resetAutoPlay();
       });
     });
+
+    // Remet à zéro le minuteur automatique lorsqu'un utilisateur clique manuellement
+    function resetAutoPlay() {
+      stopAutoPlay();
+      startAutoPlay();
+    }
+
+    // Pause au survol de la souris
+    carouselContainer.addEventListener("mouseenter", stopAutoPlay);
+    carouselContainer.addEventListener("mouseleave", startAutoPlay);
 
     // Navigation au clavier avec les flèches directionnelles
     document.addEventListener("keydown", (event) => {
