@@ -34,7 +34,7 @@
    
 .slide {
   display: none;
-  height: 120px;          /* Hauteur fixe */
+  height: 80px;          /* Hauteur fixe */
   padding: 8px 16px;
   color: white;
   text-align: center;
