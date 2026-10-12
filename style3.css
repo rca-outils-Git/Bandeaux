@@ -1,203 +1,203 @@
-<style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      display: flex;         /* Utilise Flexbox pour la mise en page générale */
-      justify-content: center; /* Centre le contenu horizontalement */
-      align-items: center;   /* Centre le contenu verticalement */
-      padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
-      font-family: Arial, sans-serif; /* Police d'écriture principale */
-      background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
-    }
+  <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
 
-    body-xx {
-      min-height: 100vh;
-      display: flex;         /* Utilise Flexbox pour la mise en page générale */
-      justify-content: center; /* Centre le contenu horizontalement */
-      align-items: center;   /* Centre le contenu verticalement */
-      padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
-      font-family: Arial, sans-serif; /* Police d'écriture principale */
-      background: #f3f4f6;   /* Couleur de fond de la page (gris très clair) */
-    }
+          
+        body {
+          display: block;
+          width: 100%;
+          min-height: 100vh;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          padding: 0;
+          font-family: Arial, sans-serif;
+          background: #ffffff;
+        }
+        
+        body-xx {
+          min-height: 100vh;
+          display: flex;         /* Utilise Flexbox pour la mise en page générale */
+          justify-content: center; /* Centre le contenu horizontalement */
+          align-items: center;   /* Centre le contenu verticalement */
+          padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
+          font-family: Arial, sans-serif; /* Police d'écriture principale */
+          background: #ffffff;   /* Couleur de fond de la page */
+        }
 
-    /* --------------------------------------------------
-       CONTENEUR PRINCIPAL DU CARROUSEL
-       -------------------------------------------------- */
-    .carousel {
-      width: 100%;           /* Occupe toute la largeur disponible */
-      max-width: 1100px;      /* Limite la largeur maximale à 900px */
-      overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
-       /*border-radius: 24px;   Arrondit les angles du carrousel */
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
-      background: #ffffff;
-      padding-bottom: 2px;
-    }
+        /* --------------------------------------------------
+           CONTENEUR PRINCIPAL DU CARROUSEL
+           -------------------------------------------------- */
+        .carousel {
+          width: 100%;          /* Occupe toute la largeur disponible */
+          max-width: 1100px;     /* Limite la largeur maximale */
+          overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
+          /*border-radius: 24px;   /* Arrondit les angles du carrousel */
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
+          background: #ffffff;
+          padding-bottom: 1px;
+        }
 
-    /* --------------------------------------------------
-       STYLES DES DIAPOSITIVES (Slides)
-       -------------------------------------------------- */
-    .slide {
-      display: none;          /* Masque les diapositives par défaut */
-      min-height: 80px;      /* Hauteur minimale de chaque slide */
-      padding: 2px;          /* Espacement interne */
-      color: white;           /* Couleur du texte en blanc */
-      text-align: center;     /* Centre le texte */
-      flex-direction: row;    /* Aligne les éléments enfants horizontalement */
-      align-items: center;    /* Centre les enfants verticalement */
-      justify-content: center;/* Centre les enfants horizontalement */
-      gap: 15px;              /* Espace entre chaque élément */
-      animation: fadeIn 0.4s ease; /* Animation d'apparition fluide */
-    }
+        /* --------------------------------------------------
+           STYLES DES DIAPOSITIVES (Slides)
+           -------------------------------------------------- */
+        .slide {
+          display: none;
+          width: 100%;
+          min-height: 60px;
+          padding: 1px;
+          color: white;
+          text-align: center;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          animation: fadeIn 0.4s ease;
+        }
 
-    .slide.active {
-      display: flex;
-    }
+        .slide.active {
+          display: flex;
+        }
 
-    /* Titres dans les slides */
-    .slide h2, .slide h3 {
-      font-size: clamp(22px, 4vw, 32px);
-      line-height: 1.2;
-    }
+        /* Titres dans les slides */
+        .slide h2, .slide h3 {
+          font-size: clamp(22px, 4vw, 32px);
+          line-height: 1.2;
+        }
 
-    /* Paragraphes dans les slides */
-    .slide p {
-      max-width: 480px;       /* Limite la largeur du texte pour la lisibilité */
-      font-size: 20px;
-      line-height: 1.6;
-    }
+        /* Paragraphes dans les slides */
+        .slide p {
+          max-width: 480px;       /* Limite la largeur du texte pour la lisibilité */
+          font-size: 20px;
+          line-height: 1.6;
+        }
 
-    /* Images intégrées dans les slides */
-    .slide img {
-      width: 100%;
-      max-width: 100px;       /* Largeur maximale de l'image */
-      height: 50px;           /* Hauteur fixe de l'image */
-      object-fit: cover;      /* Conserve le ratio de l'image sans la déformer */
-      border-radius: 12px;    /* Arrondit les coins de l'image */
-      background: rgba(255,255,255,0.15);
-      flex-shrink: 0;
-    }
+        /* Images intégrées dans les slides */
+        .slide img {
+          width: 100%;
+          max-width: 100px;       /* Largeur maximale de l'image */
+          height: 50px;           /* Hauteur fixe de l'image */
+          object-fit: cover;      /* Conserve le ratio de l'image sans la déformer */
+          border-radius: 12px;    /* Arrondit les coins de l'image */
+          background: rgba(255,255,255,0.15);
+          flex-shrink: 0;
+        }
 
-    /* Style par défaut (text-white) */
-    .mon-lien {
-      color: #ffffff;
-      text-decoration: none; /* Pas de soulignement au départ */
-    }
+        /* Style par défaut (text-white) */
+        .mon-lien {
+          color: #ffffff;
+          text-decoration: none; /* Pas de soulignement au départ */
+        }
 
-    /* Style au survol (hover:underline) */
-    .mon-lien:hover {
-      text-decoration: underline;
-    }
+        /* Style au survol (hover:underline) */
+        .mon-lien:hover {
+          text-decoration: underline;
+        }
 
 
-    /* --------------------------------------------------
-       NAVIGATION ET BOUTONS
-       -------------------------------------------------- */
-    .carousel-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 2px;
-      margin-top: 4px;
-      padding-left: 24px; 
-      padding-right: 24px;
-    }
+        /* --------------------------------------------------
+           NAVIGATION ET BOUTONS
+           -------------------------------------------------- */
+        .carousel-nav {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 1px;
+          margin-top: 4px;
+          padding-left: 24px; 
+          padding-right: 24px;
+        }
 
-    /* Boutons de navigation (Précédent / Suivant) */
-    .btn-nav {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2px;
-      border-radius: 8px;
-      background-color: rgba(30, 41, 59, 0.8); /* slate-800 */
-      color: #cbd5e1; /* slate-300 */
-      border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700/50 */
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
+        /* Boutons de navigation (Précédent / Suivant) */
+        .btn-nav {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 2px;
+          border-radius: 4px;
+          background-color: rgba(30, 41, 59, 0.8); /* slate-800 */
+          color: #cbd5e1; /* slate-300 */
+          border: 1px solid rgba(51, 65, 85, 0.5); /* slate-700/50 */
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
 
-    .btn-nav:hover:not(:disabled) {
-      background-color: rgba(51, 65, 85, 1);
-      color: #ffffff;
-    }
+        .btn-nav:hover {
+          background-color: rgba(51, 65, 85, 1);
+          color: #ffffff;
+        }
 
-    .btn-nav:disabled {
-      opacity: 0.35;
-      cursor: not-allowed;
-    }
+        .btn-nav:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+        }
 
-    .btn-nav:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
-    }
+        .btn-nav:active {
+          transform: scale(0.95);
+        }
 
-    .btn-nav:active:not(:disabled) {
-      transform: scale(0.95);
-    }
+        /* Taille des icônes SVG */
+        .btn-nav .icon {
+          width: 16px;
+          height: 12px;
+        }
 
-    /* Taille des icônes SVG */
-    .btn-nav .icon {
-      width: 16px;
-      height: 12px;
-    }
+        /* Conteneur des puces (Dots) */
+        .dots-container {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
 
-    /* Conteneur des puces (Dots) */
-    .dots-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;                /* espacement des puces 
-    }
+        /* Puces de navigation */
+        .dot {
+          width: 8px;
+          height: 8px;
+          border: none;
+          border-radius: 9999px;
+          background-color: #cbd5e1; /* slate-300 */
+          cursor: pointer;
+          transition: all 0.3s ease;
+          padding: 0;
+        }
 
-    /* Puces de navigation */
-    .dot {
-      width: 8px;
-      height: 8px;
-      border: none;
-      border-radius: 9999px;
-      background-color: #cbd5e1; /* slate-300 */
-      cursor: pointer;
-      transition: all 0.3s ease;
-      padding: 0;
-    }
+        .dot:hover {
+          background-color: #64748b; /* slate-500 */
+        }
 
-    .dot:hover {
-      background-color: #64748b; /* slate-500 */
-    }
+        /* Puce active */
+        .dot.active {
+          width: 32px;
+          background-color: #6366f1; /* indigo-500 */
+        }
 
-    /* Puce active */
-    .dot.active {
-      width: 32px;
-      background-color: #6366f1; /* indigo-500 */
-    }
+        /* --------------------------------------------------
+           ANIMATIONS & RESPONSIVE
+           -------------------------------------------------- */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-    /* --------------------------------------------------
-       ANIMATIONS & RESPONSIVE
-       -------------------------------------------------- */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        @media (max-width: 480px) {
+          .slide {
+            flex-direction: column;
+            min-height: 120px;
+            padding: 12px 8px;
+          }
 
-    @media (max-width: 480px) {
-      .slide {
-        flex-direction: column;
-        min-height: 220px;
-        padding: 12px 8px;
-      }
-
-      .slide img {
-        height: 80px;
-        max-width: 120px;
-      }
-    }
-  </style>
+          .slide img {
+            height: 80px;
+            max-width: 120px;
+          }
+        }
+    </style>
