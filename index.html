@@ -73,7 +73,7 @@
 
     /* Paragraphes dans les slides */
     .slide p {
-      max-width: 480px;       /* Limite la largeur du texte pour la lisibilité */
+      max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
       font-size: 20px;
       line-height: 1.6;
     }
@@ -157,7 +157,7 @@
     .dots-container {
       display: flex;
       align-items: center;
-      gap: 10px;                /* espacement des puces 
+      gap: 10px;                /* espacement des puces */
     }
 
     /* Puces de navigation */
@@ -291,16 +291,6 @@
       goToSlide(currentSlide - 1);
     }
 
-    // Démarrage du défilement automatique
-    function startAutoPlay() {
-      autoPlayInterval = setInterval(nextSlide, slideDuration);
-    }
-
-    // Arrêt du défilement automatique (lors du survol)
-    function stopAutoPlay() {
-      clearInterval(autoPlayInterval);
-    }
-
     // Événements sur les boutons Précédent / Suivant
     prevBtn.addEventListener("click", () => {
       prevSlide();
@@ -327,9 +317,23 @@
       startAutoPlay();
     }
 
-    // Pause au survol de la souris
-    carouselContainer.addEventListener("mouseenter", stopAutoPlay);
-    carouselContainer.addEventListener("mouseleave", startAutoPlay);
+    function startAutoPlay() {
+      stopAutoPlay(); // Évite les minuteurs multiples
+      autoPlayInterval = setInterval(nextSlide, slideDuration);
+  }
+
+  function stopAutoPlay() {
+    clearInterval(autoPlayInterval);
+  }
+
+  // Pause au survol
+  carouselContainer.addEventListener("mouseenter", stopAutoPlay);
+  carouselContainer.addEventListener("mouseleave", startAutoPlay);
+
+  // Démarrage automatique
+  startAutoPlay();
+
+   
 
     // Navigation au clavier avec les flèches directionnelles
     document.addEventListener("keydown", (event) => {
@@ -339,6 +343,7 @@
         goToSlide(currentSlide - 1);
       }
     });
+
   </script>
     
     </body>
