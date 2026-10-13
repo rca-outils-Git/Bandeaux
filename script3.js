@@ -11,19 +11,22 @@
     const slideDuration = 4000; // Durée d'affichage de chaque slide en millisecondes (4 secondes)
 
     function goToSlide(index) {
-      // Boucle infinie (revient au début si on dépasse la fin, ou va à la fin si on recule depuis le début)
+      // Vérifier que le carrousel contient des slides
+      if (totalSlides === 0) return;
+    
+      // Boucler au début ou à la fin
       currentSlide = (index + totalSlides) % totalSlides;
-
-      // Met à jour l'affichage des slides
+    
+      // Afficher uniquement la slide active
       slides.forEach((slide, i) => {
         slide.classList.toggle("active", i === currentSlide);
       });
-
-      // Met à jour l'état des puces (dots)
+    
+      // Mettre à jour les points de navigation
       dots.forEach((dot, i) => {
         dot.classList.toggle("active", i === currentSlide);
       });
-    }
+}
     
     // Fonctions de navigation
     function nextSlide() {
@@ -34,12 +37,11 @@
       goToSlide(currentSlide - 1);
     }
 
-    // Démarrage du défilement automatique
-    function startAutoPlay() {
+   function startAutoPlay() {
+      stopAutoPlay();
       autoPlayInterval = setInterval(nextSlide, slideDuration);
     }
 
-    // Arrêt du défilement automatique (lors du survol)
     function stopAutoPlay() {
       clearInterval(autoPlayInterval);
     }
@@ -74,6 +76,7 @@
     carouselContainer.addEventListener("mouseenter", stopAutoPlay);
     carouselContainer.addEventListener("mouseleave", startAutoPlay);
     // Démarrage immédiat du carrousel
+    goToSlide(0);
     startAutoPlay();
 
     // Navigation au clavier avec les flèches directionnelles
