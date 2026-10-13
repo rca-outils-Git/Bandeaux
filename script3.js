@@ -74,6 +74,8 @@
     // Pause au survol de la souris
     carouselContainer.addEventListener("mouseenter", stopAutoPlay);
     carouselContainer.addEventListener("mouseleave", startAutoPlay);
+    // Démarrage immédiat du carrousel
+    startAutoPlay();
 
     // Navigation au clavier avec les flèches directionnelles
     document.addEventListener("keydown", (event) => {
@@ -83,5 +85,4 @@
         goToSlide(currentSlide - 1);
       }
     });
-    startAutoPlay();
   </script>
