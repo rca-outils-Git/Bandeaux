@@ -58,7 +58,7 @@
     .slide p {
       max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
       font-size: 20px;
-      line-height: 1.6;
+      line-height: 1.1;       /* espacement des lignes */
     }
 
     /* Images intégrées dans les slides */
