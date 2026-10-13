@@ -1,4 +1,4 @@
-<script>
+ <script>
     const slides = document.querySelectorAll(".slide");
     const dots = document.querySelectorAll(".dot");
     const prevBtn = document.getElementById("prevBtn");
