@@ -14,13 +14,22 @@
       background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
     }
 
+    body-xx {
+      min-height: 100vh;
+      display: flex;         /* Utilise Flexbox pour la mise en page générale */
+      justify-content: center; /* Centre le contenu horizontalement */
+      align-items: center;   /* Centre le contenu verticalement */
+      padding: 20px;         /* Espace de sécurité autour du contenu sur petits écrans */
+      font-family: Arial, sans-serif; /* Police d'écriture principale */
+      background: #f3f4f6;   /* Couleur de fond de la page (gris très clair) */
+    }
 
     /* --------------------------------------------------
        CONTENEUR PRINCIPAL DU CARROUSEL
        -------------------------------------------------- */
     .carousel {
       width: 100%;           /* Occupe toute la largeur disponible */
-      max-width: 1400px;      /* Limite la largeur maximale à 900px */
+      max-width: 1100px;      /* Limite la largeur maximale à 900px */
       overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
       /*border-radius: 24px;   /* Arrondit les angles du carrousel */
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
@@ -31,39 +40,35 @@
     /* --------------------------------------------------
        STYLES DES DIAPOSITIVES (Slides)
        -------------------------------------------------- */
-   
-.slide {
-  display: none;
-  height: 80px;          /* Hauteur fixe */
-  padding: 8px 16px;
-  color: white;
-  text-align: center;
+    .slide {
+      display: none;          /* Masque les diapositives par défaut */
+      min-height: 80px;      /* Hauteur minimale de chaque slide */
+      padding: 2px;          /* Espacement interne */
+      color: white;           /* Couleur du texte en blanc */
+      text-align: center;     /* Centre le texte */
+      flex-direction: row;    /* Aligne les éléments enfants horizontalement */
+      align-items: center;    /* Centre les enfants verticalement */
+      justify-content: center;/* Centre les enfants horizontalement */
+      gap: 15px;              /* Espace entre chaque élément */
+      animation: fadeIn 0.4s ease; /* Animation d'apparition fluide */
+    }
 
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
+    .slide.active {
+      display: flex;
+    }
 
-  overflow: hidden;
-  animation: fadeIn 0.4s ease;
-}
+    /* Titres dans les slides */
+    .slide h2, .slide h3 {
+      font-size: clamp(22px, 4vw, 32px);
+      line-height: 1.2;
+    }
 
-.slide.active {
-  display: flex;
-}
-
-.slide h2,
-.slide h3 {
-  font-size: clamp(18px, 2.5vw, 28px);
-  line-height: 1.2;
-}
-
-.slide p {
-  max-width: 900px;
-  font-size: clamp(14px, 1.8vw, 20px);
-  line-height: 1.3;
-  margin: 0;
-}
+    /* Paragraphes dans les slides */
+    .slide p {
+      max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
+      font-size: 20px;
+      line-height: 1.6;
+    }
 
     /* Images intégrées dans les slides */
     .slide img {
@@ -183,22 +188,17 @@
       }
     }
 
-   @media (max-width: 480px) {
-  .slide {
-    height: 220px;
-    flex-direction: column;
-    padding: 12px;
-    gap: 8px;
-  }
+    @media (max-width: 480px) {
+      .slide {
+        flex-direction: column;
+        min-height: 220px;
+        padding: 12px 8px;
+      }
 
-  .slide img {
-    height: 50px;
-    max-width: 100px;
-  }
-
-  .slide p {
-    font-size: clamp(13px, 3.5vw, 16px);
-    line-height: 1.3;
-  }
-}
+      .slide img {
+        height: 80px;
+        max-width: 120px;
+      }
+    }
   </style>
+  
