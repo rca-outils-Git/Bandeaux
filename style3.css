@@ -20,6 +20,7 @@
     .carousel {
       width: 100%;           /* Occupe toute la largeur disponible */
       max-width: 1100px;      /* Limite la largeur maximale à 900px */
+      height: 120px;         /* Hauteur globale fixe */ 
       overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
       /*border-radius: 24px;   /* Arrondit les angles du carrousel */
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
@@ -32,8 +33,7 @@
        -------------------------------------------------- */
     .slide {
       display: none;          /* Masque les diapositives par défaut */
-      min-height: 80px;      /* Hauteur minimale de chaque slide */
-      max-height: 100px; 
+      height: 85px;
       padding: 2px;          /* Espacement interne */
       color: white;           /* Couleur du texte en blanc */
       text-align: center;     /* Centre le texte */
@@ -179,17 +179,28 @@
       }
     }
 
-    @media (max-width: 480px) {
-      .slide {
-        flex-direction: column;
-        min-height: 220px;
-        padding: 12px 8px;
-      }
+   @media (max-width: 480px) {
+  .carousel {
+    height: 150px;
+  }
 
-      .slide img {
-        height: 80px;
-        max-width: 120px;
-      }
-    }
+  .slide {
+    height: 115px;
+    min-height: 0;
+    flex-direction: column;
+    padding: 5px 8px;
+    gap: 5px;
+  }
+
+  .slide img {
+    height: 35px;
+    max-width: 80px;
+  }
+
+  .slide p {
+    font-size: 14px;
+    line-height: 1.2;
+  }
+}
   </style>
   
