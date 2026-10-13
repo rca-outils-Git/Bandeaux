@@ -144,7 +144,7 @@
     .dots-container {
       display: flex;
       align-items: center;
-      gap: 10px;                /* espacement des puces 
+      gap: 10px;                /* espacement des puces */
     }
 
     /* Puces de navigation */
