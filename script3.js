@@ -83,4 +83,5 @@
         goToSlide(currentSlide - 1);
       }
     });
+    startAutoPlay();
   </script>
