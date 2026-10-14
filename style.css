@@ -181,7 +181,7 @@
 
    @media (max-width: 480px) {
   .carousel {
-    height: 150px;
+    height: 120px;
   }
 
   .slide {
