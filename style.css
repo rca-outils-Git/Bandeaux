@@ -184,10 +184,18 @@
       }
     }
 
-  @media (max-width: 480px) {
+ @media (max-width: 480px) {
   .carousel {
-    height: 110px; /* Avant : 150px */
+    height: 110px; /* Réduit la hauteur totale */
+    padding-bottom: 0;
   }
+
+  .carousel-nav {
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
 
   .slide {
     height: 75px; /* Avant : 100px */
@@ -220,7 +228,7 @@
 
   .carousel-nav {
     margin-top: 0;
-    padding-top: 0;
+    padding-top: 1;
   }
 }
   </style>
