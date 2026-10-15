@@ -36,10 +36,10 @@
       height: 85px;
       padding: 2px;          /* Espacement interne */
       color: white;           /* Couleur du texte en blanc */
-      text-align: right;     /* Centre le texte */                    /* !!!!!!!!!!!*/
+      text-align: center;     /* Centre le texte */                    
       align-items: center;    /* Centre les enfants verticalement */
       justify-content: center;/* Centre les enfants horizontalement */
-      gap: 30px;              /* Espace entre chaque élément */
+      gap: 50px;              /* Espace entre chaque élément */
       animation: fadeIn 0.4s ease; /* Animation d'apparition fluide */
     }
 
@@ -77,9 +77,6 @@
       flex-shrink: 0;
     }
 
-
-   
-   
     /* Style par défaut (text-white) */
     .mon-lien {
       color: #ffffff;
