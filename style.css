@@ -11,7 +11,7 @@
       align-items: center;   /* Centre le contenu verticalement */
       padding: 5px;         /* Espace de sécurité autour du contenu sur petits écrans */
       font-family: Arial, sans-serif; /* Police d'écriture principale */
-      background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
+      background: #fffff0;   /* Couleur de fond de la page (gris très clair) */
     }
 
     /* --------------------------------------------------
@@ -66,7 +66,7 @@
       line-height: 1.1;       /* espacement des lignes */
     }
 
-    /* Images intégrées dans les slides 
+    /* Images intégrées dans les slides */
     .slide img {
       width: 100%;
       max-width: 100px;       /* Largeur maximale de l'image */
@@ -75,15 +75,15 @@
       border-radius: 12px;    /* Arrondit les coins de l'image */
       background: rgba(255,255,255,0.15);
       flex-shrink: 0;
-    } */
-    .slide img {
+    }
+    /*.slide img {
         width: 60px;
         height: auto;
         gap : 20px; 
          /*  object-posirtion: left;*/
         max-width: 60px;
         flex-shrink: 0;
-      } 
+      } */
    
    
     /* Style par défaut (text-white) */
@@ -105,10 +105,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-     /* background-color: rgb(255, 255, 0);            TEST */
       background-color: #eeeeee;
       padding-top: 2px;
-      margin-top: 4px;
+      margin-top: 0px;
       padding-left: 24px; 
       padding-right: 24px;
     }
