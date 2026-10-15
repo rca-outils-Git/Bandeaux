@@ -55,7 +55,7 @@
     }
 
     /* Paragraphes dans les slides */
-    .slide p {
+    .slide p-std {
       max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
       font-size: 30px;
       line-height: 1.1;       /* espacement des lignes */
@@ -96,7 +96,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: rgb(255, 255, 0);            /*  TEST */
+     /* background-color: rgb(255, 255, 0);            TEST */
+      background-color: #eeeeee;
       padding-top: 2px;
       margin-top: 4px;
       padding-left: 24px; 
