@@ -20,12 +20,12 @@
     .carousel {
       width: 100%;           /* Occupe toute la largeur disponible */
       max-width: 1200px;      /* Limite la largeur maximale */
-      height: 120px;         /* Hauteur globale fixe */ 
+      height: 110px;         /* Hauteur globale fixe */ 
       overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
       /*border-radius: 24px;   /* Arrondit les angles du carrousel */
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
       background: #ffffff;
-      padding-bottom: 2px;
+      padding-bottom: Opx;
     }
 
     /* --------------------------------------------------
@@ -57,7 +57,7 @@
     /* Paragraphes dans les slides */
     .slide p-std {
       max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
-      font-size: 30px;
+      font-size: 22px;
       line-height: 1.1;       /* espacement des lignes */
     }
   .slide p-small {
