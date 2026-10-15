@@ -57,7 +57,7 @@
     /* Paragraphes dans les slides */
     .slide p {
       max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
-      font-size: 22px;
+      font-size: 30px;
       line-height: 1.1;       /* espacement des lignes */
     }
   .slide p-small {
