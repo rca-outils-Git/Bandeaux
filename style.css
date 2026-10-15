@@ -79,6 +79,8 @@
     .slide img {
         width: 60px;
         height: auto;
+        gap : 20px; 
+         /*  object-posirtion: left;*/
         max-width: 60px;
         flex-shrink: 0;
    } 
