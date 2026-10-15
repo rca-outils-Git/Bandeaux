@@ -4,7 +4,6 @@
     const nextBtn = document.getElementById("nextBtn");
     const carouselContainer = document.getElementById("carousel");
 
-
     let currentSlide = 0;
     const totalSlides = slides.length;
     let autoPlayInterval;
@@ -13,10 +12,8 @@
     function goToSlide(index) {
       // Vérifier que le carrousel contient des slides
       if (totalSlides === 0) return;
-    
       // Boucler au début ou à la fin
       currentSlide = (index + totalSlides) % totalSlides;
-    
       // Afficher uniquement la slide active
       slides.forEach((slide, i) => {
         slide.classList.toggle("active", i === currentSlide);
@@ -32,16 +29,13 @@
     function nextSlide() {
       goToSlide(currentSlide + 1);
     }
-
     function prevSlide() {
       goToSlide(currentSlide - 1);
     }
-
    function startAutoPlay() {
       stopAutoPlay();
       autoPlayInterval = setInterval(nextSlide, slideDuration);
     }
-
     function stopAutoPlay() {
       clearInterval(autoPlayInterval);
     }
