@@ -181,14 +181,14 @@
 
    @media (max-width: 480px) {
   .carousel {
-    height: 120px;
+    height: 150px;
   }
 
   .slide {
-    height: 115px;
+    height: 100px;
     min-height: 0;
     flex-direction: column;
-    padding: 5px 8px;
+    padding: 3px 5px;
     gap: 5px;
   }
 
@@ -198,8 +198,8 @@
   }
 
   .slide p {
-    font-size: 14px;
-    line-height: 1.2;
+    font-size: 15px;
+    line-height: 1.1;
   }
 }
   </style>
