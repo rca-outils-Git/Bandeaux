@@ -11,7 +11,7 @@
       align-items: center;   /* Centre le contenu verticalement */
       padding: 5px;         /* Espace de sécurité autour du contenu sur petits écrans */
       font-family: Arial, sans-serif; /* Police d'écriture principale */
-      background: #ffff00;   /* Couleur de fond de la page (gris très clair) */
+      background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
     }
 
     /* --------------------------------------------------
@@ -24,8 +24,8 @@
       overflow: hidden;      /* Masque tout contenu qui dépasserait du conteneur */
       /*border-radius: 24px;   /* Arrondit les angles du carrousel */
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Ombre portée douce */
-      background: #ffffff;
-      padding-bottom: Opx;
+      background: #ffff00;
+      padding-bottom: 0px;
     }
 
     /* --------------------------------------------------
