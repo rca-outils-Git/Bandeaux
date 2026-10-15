@@ -75,6 +75,7 @@
       border-radius: 12px;    /* Arrondit les coins de l'image */
       background: rgba(255,255,255,0.15);
       flex-shrink: 0;
+      display: block;            /*!!!!!!!!!!!! ???????????*/ 
     }
 
     /* Style par défaut (text-white) */
