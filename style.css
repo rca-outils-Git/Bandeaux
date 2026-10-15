@@ -66,7 +66,7 @@
       line-height: 1.1;       /* espacement des lignes */
     }
 
-    /* Images intégrées dans les slides */
+    /* Images intégrées dans les slides 
     .slide img {
       width: 100%;
       max-width: 100px;       /* Largeur maximale de l'image */
@@ -75,8 +75,15 @@
       border-radius: 12px;    /* Arrondit les coins de l'image */
       background: rgba(255,255,255,0.15);
       flex-shrink: 0;
-    }
-
+    } */
+    .slide img {
+        width: 60px;
+        height: auto;
+        max-width: 60px;
+        flex-shrink: 0;
+   } 
+   
+   
     /* Style par défaut (text-white) */
     .mon-lien {
       color: #ffffff;
