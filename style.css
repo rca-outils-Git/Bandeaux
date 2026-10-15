@@ -37,7 +37,7 @@
       padding: 2px;          /* Espacement interne */
       color: white;           /* Couleur du texte en blanc */
       text-align: center;     /* Centre le texte */
-      flex-direction: row;    /* Aligne les éléments enfants horizontalement */
+      /*flex-direction: row;     Aligne les éléments enfants horizontalement                  !!!!!!!!!!!!!!!!!!!!!*/
       align-items: center;    /* Centre les enfants verticalement */
       justify-content: center;/* Centre les enfants horizontalement */
       gap: 15px;              /* Espace entre chaque élément */
@@ -76,14 +76,8 @@
       background: rgba(255,255,255,0.15);
       flex-shrink: 0;
     }
-    /*.slide img {
-        width: 60px;
-        height: auto;
-        gap : 20px; 
-         /*  object-posirtion: left;*/
-        max-width: 60px;
-        flex-shrink: 0;
-      } */
+
+
    
    
     /* Style par défaut (text-white) */
