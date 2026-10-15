@@ -83,7 +83,7 @@
          /*  object-posirtion: left;*/
         max-width: 60px;
         flex-shrink: 0;
-   } 
+      } 
    
    
     /* Style par défaut (text-white) */
@@ -206,7 +206,6 @@
     padding-top: 0;
     padding-bottom: 0;
   }
-}
 
   .slide {
     height: 75px; /* Avant : 100px */
@@ -241,6 +240,7 @@
     margin-top: 0;
     padding-top: 1;
   }
-}
+ }   
+
   </style>
   
