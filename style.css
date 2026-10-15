@@ -9,9 +9,9 @@
       display: flex;         /* Utilise Flexbox pour la mise en page générale */
       justify-content: center; /* Centre le contenu horizontalement */
       align-items: center;   /* Centre le contenu verticalement */
-      padding: 5px;         /* Espace de sécurité autour du contenu sur petits écrans */
+      padding: 1px;         /* Espace de sécurité autour du contenu sur petits écrans */
       font-family: Arial, sans-serif; /* Police d'écriture principale */
-      background: #ffff00;   /* Couleur de fond de la page (gris très clair) */
+      background: #ffffff;   /* Couleur de fond de la page (gris très clair) */
     }
 
     /* --------------------------------------------------
