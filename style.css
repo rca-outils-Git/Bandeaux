@@ -67,7 +67,7 @@
 
     /* Images intégrées dans les slides */
     .slide img {
-      width: 60px;      / * avant = 100%*/
+      width: 100px;      / * avant = 100%*/
       max-width: 100px;       /* Largeur maximale de l'image */
       height: 50px;           /* Hauteur fixe de l'image */
       object-fit: contain;    /* avnt = cover */ /* Conserve le ratio de l'image sans la déformer */
