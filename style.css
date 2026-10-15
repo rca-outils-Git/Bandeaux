@@ -60,6 +60,11 @@
       font-size: 20px;
       line-height: 1.1;       /* espacement des lignes */
     }
+  .slide p-small {
+      max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
+      font-size: 12px;
+      line-height: 1.1;       /* espacement des lignes */
+    }
 
     /* Images intégrées dans les slides */
     .slide img {
@@ -201,6 +206,11 @@
     font-size: 15px;
     line-height: 1.1;
   }
+  .slide p-small {
+      max-width: 900px;       /* Limite la largeur du texte pour la lisibilité */
+      font-size: 12px;
+      line-height: 1.1;       /* espacement des lignes */
+   }
 }
   </style>
   
