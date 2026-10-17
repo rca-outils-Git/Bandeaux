@@ -1,4 +1,4 @@
-<style>
+ne<style>
     * {
       margin: 0;
       padding: 0;
@@ -81,12 +81,12 @@
     /* Style par défaut (text-white) */
     .mon-lien {
       color: #ffffff;
-      text-decoration: none; /* Pas de soulignement au départ */
+      text-decoration: underline; /* Pas de soulignement au départ */
     }
 
     /* Style au survol (hover:underline) */
     .mon-lien:hover {
-      text-decoration: underline;
+       font-weight: bold;
     }
 
 
