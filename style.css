@@ -1,4 +1,4 @@
-ne<style>
+<style>
     * {
       margin: 0;
       padding: 0;
@@ -86,6 +86,17 @@ ne<style>
 
     /* Style au survol (hover:underline) */
     .mon-lien:hover {
+       font-weight: bold;
+    }
+
+    /* Style par défaut bouton (text-white)  fond  Vert*/
+    .mon-bouton {
+      color: #ffffff;
+      background : #36CF92; 
+    }
+
+    /* Style au survol (hover:underline) */
+    .mon-bouton:hover {
        font-weight: bold;
     }
 
