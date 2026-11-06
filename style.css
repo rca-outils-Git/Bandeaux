@@ -81,56 +81,38 @@
     /* Style par défaut (text-white) */
     .mon-lien {
       color: #ffffff;
-      text-decoration: underline; /* Pas de soulignement au départ */
+      text-decoration: underline; 
     }
 
-    /* Style au survol (hover:underline) */
+    /* Style au survol  */
     .mon-lien:hover {
        font-weight: bold;
     }
 
-    /* Style par défaut bouton (text-white)  fond  Vert*/
-    .mon-bouton {
-      color: #ffffff;
-      background : #36CF92; 
-    }
-
-    /* Style au survol (hover:underline) */
-    .mon-bouton:hover {
-       font-weight: bold;
-    }
-
-
-
-
-.bouton1 {
-  border: 0;
-  padding: 20px 20px;
-  text-align: center;
-  color: white;
-  text-shadow: 1px 1px 1px black;
-  border-radius: 10px;
-  background-color: tomato;
-  background-image: linear-gradient(
-    to top left,
-    rgb(0 0 0 / 0.2),
-    rgb(0 0 0 / 0.2) 30%,
-    transparent
-  );
-  box-shadow:
-    inset 2px 2px 3px rgb(255 255 255 / 0.6),
-    inset -2px -2px 3px rgb(0 0 0 / 0.6);
-}
-
-.bouton1:hover {
-  background-color: red;
-}
-
-.bouton1:active {
-  box-shadow:
-    inset -2px -2px 3px rgb(255 255 255 / 0.6),
-    inset 2px 2px 3px rgb(0 0 0 / 0.6);
-}
+   /* Bouton */ 
+   .bouton1 {
+     border: 0;
+     padding: 20px 20px;
+     text-align: center;
+     text-decoration: none; 
+     color: white;
+     text-shadow: 1px 1px 1px black;
+     border-radius: 10px;
+     background-color: tomato;
+     background-image: linear-gradient(
+       to top left,
+       rgb(0 0 0 / 0.2),
+       rgb(0 0 0 / 0.2) 30%,
+       transparent
+     );
+     box-shadow:
+       inset 2px 2px 3px rgb(255 255 255 / 0.6),
+       inset -2px -2px 3px rgb(0 0 0 / 0.6);
+   }
+   
+   .bouton1:hover {
+     background-color: red;
+   }
 
 
     /* --------------------------------------------------
