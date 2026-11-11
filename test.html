@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrousel animé 11112026 22:47</title>
+    <title>Carrousel animé 11112026 23:10</title>
     <link rel="stylesheet" href="style.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N63RBPCESD"></script>
       <script>
@@ -92,41 +92,28 @@
       </button>
     </div> 
   </div>
-      
-  <!-- SUIVI DES CLICS GOOGLE ANALYTICS -->
-  <script>
-    document.querySelectorAll('[data-annonce]').forEach((lien) => {
-
-      lien.addEventListener('click', function() {
-
-        console.log("Clic annonce détecté :", this.dataset.annonce);
-
-        if (typeof window.gtag === 'function') {
-
-          gtag('event', 'clic_annonce', {
-
-            nom_annonce: 'Annonce ' + this.dataset.annonce,
-            numero_annonce: this.dataset.annonce,
-            url_destination: this.href,
-            texte_annonce: this.textContent.trim(),
-
-            debug_mode: true,
-            transport_type: 'beacon'
-
-          });
-
-          console.log("Événement envoyé à GA4");
-
-        } else {
-
-          console.error("Google Analytics n'est pas chargé");
-
-        }
-
+  
+    <script src="script.js"></script>
+    <!-- SUIVI DES CLICS GOOGLE ANALYTICS -->
+    <script>
+      document.querySelectorAll('[data-annonce]').forEach((lien) => {
+        lien.addEventListener('click', function() {
+          if (typeof window.gtag === 'function') {
+            gtag('event', 'clic_annonce', {
+              nom_annonce: 'Annonce ' + this.dataset.annonce,
+              numero_annonce: this.dataset.annonce,
+              url_destination: this.href,
+              texte_annonce: this.textContent.trim(),
+              transport_type: 'beacon'
+            });
+          }
+        });
       });
 
-    });
-  </script>
+    </script>
+  
+
+
 
 
     </body>
