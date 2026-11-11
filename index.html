@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrousel animé 11112026 18:24</title>
+    <title>Carrousel animé 11112026 20:52</title>
     <link rel="stylesheet" href="style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N63RBPCESD"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-N63RBPCESD');
+    </script>
     </head> 
-  </head>
   <body>
     <div class="carousel" id="carousel">  
         <!-- Annonce = 1 -->
@@ -18,7 +24,7 @@
         <!-- Annonce = 2 -->
         <section class="slide" style="background-color:RGB(0, 0, 255);">
           
-          <p-std>Accueil des nouveaux adhérents le 28 novembre 9h-12h<a href="https://www.randocotedamour.fr/collect/description/420558-q-accueil-nouveaux-adherents" target="_blank" class="mon-lien">INSCRIPTION</a></p-std>
+          <p-std>Accueil des nouveaux adhérents le 28 novembre 9h-12h <a href="https://www.randocotedamour.fr/collect/description/420558-q-accueil-nouveaux-adherents" target="_blank" class="mon-lien"> INSCRIPTION </a></p-std>
         </section>  
         <!-- Annonce = 3 -->
         <section class="slide" style="background-color:RGB(255, 255, 255);">
@@ -44,7 +50,25 @@
       </button>
     </div> 
   </div>
-   
+  
     <script src="script.js"></script>
+    <!-- SUIVI DES CLICS GOOGLE ANALYTICS -->
+    <script>
+      document.querySelectorAll('[data-annonce]').forEach((lien) => {
+        lien.addEventListener('click', function() {
+          if (typeof window.gtag === 'function') {
+            gtag('event', 'clic_annonce', {
+              nom_annonce: 'Annonce ' + this.dataset.annonce,
+              numero_annonce: this.dataset.annonce,
+              url_destination: this.href,
+              texte_annonce: this.textContent.trim(),
+              transport_type: 'beacon'
+            });
+          }
+        });
+      });
+
+    </script>
+
     </body>
   </html>
