@@ -81,3 +81,19 @@
         goToSlide(currentSlide - 1);
       }
     });
+ 
+    document.querySelectorAll('[data-annonce]').forEach((lien) => {
+        lien.addEventListener('click', function() {
+          if (typeof window.gtag === 'function') {
+            gtag('event', 'clic_annonce', {
+              nom_annonce: 'Annonce ' + this.dataset.annonce,
+              numero_annonce: this.dataset.annonce,
+              url_destination: this.href,
+              texte_annonce: this.textContent.trim(),
+              transport_type: 'beacon'
+            });
+          }
+        });
+    });
+
+    
