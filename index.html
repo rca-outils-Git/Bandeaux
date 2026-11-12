@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrousel animé 12112026 17:33</title>
+    <title>Carrousel animé 12112026 18:12</title>
     <link rel="stylesheet" href="style.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-N63RBPCESD"></script>
       <script>
@@ -72,27 +72,5 @@
   </div>
   
     <script src="script.js"></script>
-    <!-- SUIVI DES CLICS GOOGLE ANALYTICS -->
-    <script>
-      document.querySelectorAll('[data-annonce]').forEach((lien) => {
-        lien.addEventListener('click', function() {
-          if (typeof window.gtag === 'function') {
-            gtag('event', 'clic_annonce', {
-              nom_annonce: 'Annonce ' + this.dataset.annonce,
-              numero_annonce: this.dataset.annonce,
-              url_destination: this.href,
-              texte_annonce: this.textContent.trim(),
-              transport_type: 'beacon'
-            });
-          }
-        });
-      });
-
-    </script>
-  
-
-
-
-
     </body>
   </html>
